@@ -7,7 +7,7 @@ export default function Inscripciones() {
   return (
     <Box id="inscripciones" sx={{ backgroundColor: '#f8fafc', py: 8, borderTop: '1px solid #e2e8f0' }}>
       <Container maxWidth="lg">
-        <Typography variant="h4" align="center" sx={{ fontWeight: '800', color: '#0f172a', mb: 1 }}>
+        <Typography variant="h4" align="center" sx={{ fontWeight: '800', color: '#148c14', mb: 1 }}>
           ¿Cómo Inscribirte?
         </Typography>
         <Typography variant="body1" align="center" sx={{ color: '#64748b', mb: 6 }}>

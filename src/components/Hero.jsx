@@ -39,10 +39,10 @@ export default function Hero() {
         
         {/* --- Bloque Principal --- */}
         <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 10 }, maxWidth: '850px', mx: 'auto' }}>
-          <Typography variant="overline" sx={{ color: '#0284c7', fontWeight: '800', letterSpacing: 2, display: 'block', mb: 1 }}>
+          <Typography variant="overline" sx={{ color: '#3264be', fontWeight: '800', letterSpacing: 2, display: 'block', mb: 1 }}>
             Educación Superior Pública y Gratuita
           </Typography>
-          <Typography variant="h3" component="h1" sx={{ color: '#0f172a', fontWeight: '900', mb: 3, fontSize: { xs: '36px', md: '52px' }, lineHeight: 1.15 }}>
+          <Typography variant="h3" component="h1" sx={{ color: '#148c14', fontWeight: '900', mb: 3, fontSize: { xs: '36px', md: '52px' }, lineHeight: 1.15 }}>
             Formación Técnica para los Desafíos de Hoy
           </Typography>
           <Typography variant="h6" sx={{ color: '#334155', fontWeight: '500', mb: 4, lineHeight: 1.8, fontSize: { xs: '16px', md: '20px' } }}>
@@ -55,7 +55,7 @@ export default function Hero() {
               variant="contained" 
               size="large" 
               href="#inscripciones" 
-              sx={{ backgroundColor: '#0f172a', '&:hover': { backgroundColor: '#1e293b' }, px: 4, py: 1.8, textTransform: 'none', fontWeight: '700', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(15, 23, 42, 0.2)' }}
+              sx={{ backgroundColor: '#148c14', '&:hover': { backgroundColor: '#1e293b' }, px: 4, py: 1.8, textTransform: 'none', fontWeight: '700', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(15, 23, 42, 0.2)' }}
             >
               Comenzar Preingreso 2026
             </Button>
@@ -66,7 +66,7 @@ export default function Hero() {
               href="https://aulasvirtuales.bue.edu.ar/" 
               target="_blank"
               rel="noopener"
-              sx={{ color: '#0f172a', borderColor: '#0f172a', backgroundColor: 'rgba(255,255,255,0.6)', '&:hover': { borderColor: '#0f172a', backgroundColor: '#ffffff' }, px: 3, textTransform: 'none', fontWeight: '700', borderRadius: '8px' }}
+              sx={{ color: '#148c14', borderColor: '#148c14', backgroundColor: 'rgba(255,255,255,0.6)', '&:hover': { borderColor: '#148c14', backgroundColor: '#ffffff' }, px: 3, textTransform: 'none', fontWeight: '700', borderRadius: '8px' }}
             >
               Agenda Académica 2026
             </Button>
@@ -84,8 +84,8 @@ export default function Hero() {
             <Grid item xs={12} md={4}>
               <Paper variant="transparent" sx={{ p: 3, backgroundColor: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(4px)', border: '1px solid rgba(226, 232, 240, 0)', borderRadius: '12px' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
-                  <GroupsIcon sx={{ color: '#0284c7', fontSize: 26 }} />
-                  <Typography variant="subtitle1" sx={{ fontWeight: '800', color: '#0f172a' }}>
+                  <GroupsIcon sx={{ color: '#3264be', fontSize: 26 }} />
+                  <Typography variant="subtitle1" sx={{ fontWeight: '800', color: '#148c14' }}>
                     Responsabilidad Social
                   </Typography>
                 </Box>
@@ -99,8 +99,8 @@ export default function Hero() {
             <Grid item xs={12} md={4}>
               <Paper variant="transparent" sx={{ p: 3, backgroundColor: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(4px)', border: '1px solid rgba(226, 232, 240, 0)', borderRadius: '12px' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
-                  <AccountBalanceIcon sx={{ color: '#0284c7', fontSize: 26 }} />
-                  <Typography variant="subtitle1" sx={{ fontWeight: '800', color: '#0f172a' }}>
+                  <AccountBalanceIcon sx={{ color: '#3264be', fontSize: 26 }} />
+                  <Typography variant="subtitle1" sx={{ fontWeight: '800', color: '#148c14' }}>
                     Articulación Universitaria
                   </Typography>
                 </Box>
@@ -114,8 +114,8 @@ export default function Hero() {
             <Grid item xs={12} md={4}>
               <Paper variant="transparent" sx={{ p: 3, backgroundColor: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(4px)', border: '1px solid rgba(226, 232, 240, 0)', borderRadius: '12px' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
-                  <ScienceIcon sx={{ color: '#0284c7', fontSize: 26 }} />
-                  <Typography variant="subtitle1" sx={{ fontWeight: '800', color: '#0f172a' }}>
+                  <ScienceIcon sx={{ color: '#3264be', fontSize: 26 }} />
+                  <Typography variant="subtitle1" sx={{ fontWeight: '800', color: '#148c14' }}>
                     Acciones de Extensión
                   </Typography>
                 </Box>

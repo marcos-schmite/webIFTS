@@ -7,22 +7,22 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 const items = [
   { 
-    icon: <VerifiedIcon sx={{ color: '#0284c7', fontSize: 32 }} />, 
+    icon: <VerifiedIcon sx={{ color: '#3264be', fontSize: 32 }} />, 
     title: "Título Oficial", 
     desc: "Títulos técnicos superiores con validez nacional, emitidos formalmente por el Ministerio de Educación del GCABA." 
   },
   { 
-    icon: <AccessTimeIcon sx={{ color: '#0284c7', fontSize: 32 }} />, 
+    icon: <AccessTimeIcon sx={{ color: '#3264be', fontSize: 32 }} />, 
     title: "Carreras Cortas", 
     desc: "Planes de estudio ágiles de solo 3 años de duración, diseñados para optimizar tus tiempos de cursada." 
   },
   { 
-    icon: <BusinessCenterIcon sx={{ color: '#0284c7', fontSize: 32 }} />, 
+    icon: <BusinessCenterIcon sx={{ color: '#3264be', fontSize: 32 }} />, 
     title: "Rápida Inserción Laboral", 
     desc: "Formación de perfil eminentemente práctico, enfocada de forma directa en las competencias más demandadas por el mercado laboral." 
   },
   { 
-    icon: <AccountBalanceIcon sx={{ color: '#0284c7', fontSize: 32 }} />, 
+    icon: <AccountBalanceIcon sx={{ color: '#3264be', fontSize: 32 }} />, 
     title: "Convenios Universitarios", 
     desc: "Articulación y acuerdos institucionales con universidades públicas y privadas para continuar tus estudios de grado." 
   }
@@ -35,10 +35,10 @@ export default function Beneficios() {
         
         {/* Encabezado de la Sección */}
         <Box sx={{ textAlign: 'center', mb: 6 }}>
-          <Typography variant="overline" sx={{ color: '#0284c7', fontWeight: 'bold', letterSpacing: 1.2 }}>
+          <Typography variant="overline" sx={{ color: '#3264be', fontWeight: 'bold', letterSpacing: 1.2 }}>
             Ventajas Institucionales
           </Typography>
-          <Typography variant="h4" component="h2" sx={{ color: '#0f172a', fontWeight: '800', mt: 1 }}>
+          <Typography variant="h4" component="h2" sx={{ color: '#148c14', fontWeight: '800', mt: 1 }}>
             ¿Por qué estudiar en el IFTS 19?
           </Typography>
         </Box>
@@ -67,7 +67,7 @@ export default function Beneficios() {
                 borderRadius: '12px',
                 transition: 'all 0.3s ease',
                 '&:hover': {
-                  borderColor: '#0284c7',
+                  borderColor: '#3264be',
                   boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05)',
                   transform: 'translateY(-2px)'
                 }
@@ -76,7 +76,7 @@ export default function Beneficios() {
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 {item.icon}
               </Box>
-              <Typography variant="h6" sx={{ fontWeight: '700', color: '#0f172a' }}>
+              <Typography variant="h6" sx={{ fontWeight: '700', color: '#148c14' }}>
                 {item.title}
               </Typography>
               <Typography variant="body2" sx={{ color: '#475569', lineHeight: 1.6 }}>

@@ -67,8 +67,8 @@ export default function CarreraSistemas() {
                     <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 4 }}>
                         <Grid item>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-                                <CodeIcon sx={{ color: '#0284c7', fontSize: 36 }} />
-                                <Typography variant="h4" sx={{ fontWeight: '800', color: '#0f172a', fontSize: { xs: '28px', md: '36px' } }}>
+                                <CodeIcon sx={{ color: '#3264be', fontSize: 36 }} />
+                                <Typography variant="h4" sx={{ fontWeight: '800', color: '#148c14', fontSize: { xs: '28px', md: '36px' } }}>
                                     Análisis de Sistemas
                                 </Typography>
                             </Box>
@@ -76,7 +76,7 @@ export default function CarreraSistemas() {
                                 Título Oficial • Resolución Ministerial: <strong>RS-2023-6336-GCABA-MEDGC</strong> (Plan Nuevo)
                             </Typography>
                             {/* Bloque estético de horas totales */}
-                            <Typography variant="body2" sx={{ mt: 1, color: '#0284c7', fontWeight: '700', backgroundColor: '#e0f2fe', display: 'inline-block', px: 2, py: 0.5, borderRadius: '20px' }}>
+                            <Typography variant="body2" sx={{ mt: 1, color: '#3264be', fontWeight: '700', backgroundColor: '#e0f2fe', display: 'inline-block', px: 2, py: 0.5, borderRadius: '20px' }}>
                                 Carga Horaria Total del Plan: {loading ? '...' : `${horasTotales} horas reloj`}
                             </Typography>
                         </Grid>
@@ -86,8 +86,8 @@ export default function CarreraSistemas() {
 
                     {/* Bloque: Finalidad de la Carrera */}
                     <Box sx={{ mb: 5 }}>
-                        <Typography variant="h6" sx={{ color: '#0f172a', fontWeight: '700', mb: 1.5, display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <TerminalIcon sx={{ fontSize: 20, color: '#0284c7' }} /> Finalidad General
+                        <Typography variant="h6" sx={{ color: '#148c14', fontWeight: '700', mb: 1.5, display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <TerminalIcon sx={{ fontSize: 20, color: '#3264be' }} /> Finalidad General
                         </Typography>
                         <Typography variant="body1" sx={{ color: '#334155', lineHeight: 1.8 }}>
                             Se plantea una formación integral que promueve en los estudiantes la construcción de herramientas intelectuales y prácticas necesarias para la operación, programación y análisis de sistemas informáticos. Se busca fortalecer la identidad profesional de los analistas y fomentar una perspectiva ética en el ejercicio de la tarea mediante una fuerte confluencia de saberes técnicos con el campo laboral real.
@@ -98,7 +98,7 @@ export default function CarreraSistemas() {
                     <Grid container spacing={4} sx={{ mb: 5 }}>
                         <Grid item xs={12} md={6}>
                             <Paper variant="outlined" sx={{ p: 3, backgroundColor: '#f8fafc', borderRadius: '12px', height: '100%', borderColor: '#e2e8f0' }}>
-                                <Typography variant="h6" sx={{ color: '#0f172a', fontWeight: '700', mb: 2 }}>
+                                <Typography variant="h6" sx={{ color: '#148c14', fontWeight: '700', mb: 2 }}>
                                     Ámbito de Desempeño
                                 </Typography>
                                 <Typography variant="body2" sx={{ color: '#475569', lineHeight: 1.7 }}>
@@ -109,7 +109,7 @@ export default function CarreraSistemas() {
 
                         <Grid item xs={12} md={6}>
                             <Paper variant="outlined" sx={{ p: 3, backgroundColor: '#f8fafc', borderRadius: '12px', height: '100%', borderColor: '#e2e8f0' }}>
-                                <Typography variant="h6" sx={{ color: '#0f172a', fontWeight: '700', mb: 2 }}>
+                                <Typography variant="h6" sx={{ color: '#148c14', fontWeight: '700', mb: 2 }}>
                                     Rasgos Profesionales Destacados
                                 </Typography>
                                 <Typography variant="body2" sx={{ color: '#475569', lineHeight: 1.7 }}>
@@ -123,21 +123,21 @@ export default function CarreraSistemas() {
 
                     {/* Funciones del Técnico */}
                     <Box sx={{ mb: 6 }}>
-                        <Typography variant="h6" sx={{ color: '#0f172a', fontWeight: '700', mb: 2 }}>
+                        <Typography variant="h6" sx={{ color: '#148c14', fontWeight: '700', mb: 2 }}>
                             Funciones Principales del Técnico Superior
                         </Typography>
                         <List disablePadding>
                             <ListItem sx={{ px: 0, alignItems: 'flex-start' }}>
-                                <ListItemIcon sx={{ minWidth: 32, mt: 0.5 }}><AssignmentRegIcon sx={{ color: '#0284c7', fontSize: 18 }} /></ListItemIcon>
+                                <ListItemIcon sx={{ minWidth: 32, mt: 0.5 }}><AssignmentRegIcon sx={{ color: '#3264be', fontSize: 18 }} /></ListItemIcon>
                                 <ListItemText
-                                    primary={<Typography variant="body2" sx={{ fontWeight: '600', color: '#0f172a' }}>Análisis de Requerimientos</Typography>}
+                                    primary={<Typography variant="body2" sx={{ fontWeight: '600', color: '#148c14' }}>Análisis de Requerimientos</Typography>}
                                     secondary="Interpretar las necesidades operativas, de información o de servicios informáticos en relación a los objetivos de una organización."
                                 />
                             </ListItem>
                             <ListItem sx={{ px: 0, alignItems: 'flex-start', mt: 1.5 }}>
-                                <ListItemIcon sx={{ minWidth: 32, mt: 0.5 }}><HubIcon sx={{ color: '#0284c7', fontSize: 18 }} /></ListItemIcon>
+                                <ListItemIcon sx={{ minWidth: 32, mt: 0.5 }}><HubIcon sx={{ color: '#3264be', fontSize: 18 }} /></ListItemIcon>
                                 <ListItemText
-                                    primary={<Typography variant="body2" sx={{ fontWeight: '600', color: '#0f172a' }}>Diseño y Desarrollo</Typography>}
+                                    primary={<Typography variant="body2" sx={{ fontWeight: '600', color: '#148c14' }}>Diseño y Desarrollo</Typography>}
                                     secondary="Diseñar, codificar, estructurar y desplegar sistemas informáticos complejos adaptados a procesos organizacionales vigentes."
                                 />
                             </ListItem>
@@ -146,19 +146,19 @@ export default function CarreraSistemas() {
 
                     {/* --- TABLA DINÁMICA CON DATA DEL GOOGLE SHEET --- */}
                     <Box sx={{ mt: 4 }}>
-                        <Typography variant="h5" sx={{ fontWeight: '700', color: '#0f172a', mb: 3 }}>
+                        <Typography variant="h5" sx={{ fontWeight: '700', color: '#148c14', mb: 3 }}>
                             Plan de Estudios Actualizado
                         </Typography>
 
                         {loading ? (
                             <Box sx={{ display: 'flex', justifyContent: 'center', py: 4, gap: 2, alignItems: 'center' }}>
-                                <CircularProgress size={24} sx={{ color: '#0284c7' }} />
+                                <CircularProgress size={24} sx={{ color: '#3264be' }} />
                                 <Typography variant="body2" sx={{ color: '#64748b' }}>Cargando grilla desde el servidor institucional...</Typography>
                             </Box>
                         ) : (
                             <TableContainer component={Paper} variant="outlined" sx={{ borderRadius: '12px', overflow: 'hidden', borderColor: '#e2e8f0' }}>
                                 <Table>
-                                    <TableHead sx={{ backgroundColor: '#0f172a' }}>
+                                    <TableHead sx={{ backgroundColor: '#148c14' }}>
                                         <TableRow>
                                             <TableCell sx={{ color: '#ffffff', fontWeight: '700' }}>Año</TableCell>
                                             <TableCell sx={{ color: '#ffffff', fontWeight: '700' }}>Materia</TableCell>
@@ -178,10 +178,10 @@ export default function CarreraSistemas() {
                                                 }}
                                             >
                                                 <TableCell sx={{ fontWeight: '600', color: '#334155', whiteSpace: 'nowrap' }}>{item.anio}</TableCell>
-                                                <TableCell sx={{ fontWeight: '700', color: '#0f172a' }}>{item.materia}</TableCell>
+                                                <TableCell sx={{ fontWeight: '700', color: '#148c14' }}>{item.materia}</TableCell>
                                                 <TableCell sx={{ color: '#475569' }}>{item.horas} hs</TableCell>
                                                 <TableCell sx={{ color: '#475569', fontWeight: '500' }}>{item.docente}</TableCell>
-                                                <TableCell sx={{ color: '#0284c7', fontWeight: '600', fontSize: '0.85rem' }}>{item.horario}</TableCell>
+                                                <TableCell sx={{ color: '#3264be', fontWeight: '600', fontSize: '0.85rem' }}>{item.horario}</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>

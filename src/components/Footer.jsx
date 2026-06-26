@@ -4,7 +4,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 
 export default function Footer() {
   return (
-    <Box id="contacto" sx={{ backgroundColor: '#0f172a', color: '#94a3b8', pt: 8, pb: 4 }}>
+    <Box id="contacto" sx={{ backgroundColor: '#148c14', color: '#94a3b8', pt: 8, pb: 4 }}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>

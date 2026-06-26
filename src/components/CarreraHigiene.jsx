@@ -66,7 +66,7 @@ export default function CarreraHigiene() {
                         <Grid item>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
                                 <HealthAndSafetyIcon sx={{ color: '#10b981', fontSize: 36 }} />
-                                <Typography variant="h4" sx={{ fontWeight: '800', color: '#0f172a', fontSize: { xs: '28px', md: '36px' } }}>
+                                <Typography variant="h4" sx={{ fontWeight: '800', color: '#148c14', fontSize: { xs: '28px', md: '36px' } }}>
                                     Higiene y Seguridad en el Trabajo
                                 </Typography>
                             </Box>
@@ -84,7 +84,7 @@ export default function CarreraHigiene() {
 
                     {/* Bloque: Finalidad de la Carrera */}
                     <Box sx={{ mb: 5 }}>
-                        <Typography variant="h6" sx={{ color: '#0f172a', fontWeight: '700', mb: 1.5, display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Typography variant="h6" sx={{ color: '#148c14', fontWeight: '700', mb: 1.5, display: 'flex', alignItems: 'center', gap: 1 }}>
                             <ShieldIcon sx={{ fontSize: 20, color: '#10b981' }} /> Finalidad General
                         </Typography>
                         <Typography variant="body1" sx={{ color: '#334155', lineHeight: 1.8 }}>
@@ -96,7 +96,7 @@ export default function CarreraHigiene() {
                     <Grid container spacing={4} sx={{ mb: 5 }}>
                         <Grid item xs={12} md={6}>
                             <Paper variant="outlined" sx={{ p: 3, backgroundColor: '#f8fafc', borderRadius: '12px', height: '100%', borderColor: '#e2e8f0' }}>
-                                <Typography variant="h6" sx={{ color: '#0f172a', fontWeight: '700', mb: 2 }}>
+                                <Typography variant="h6" sx={{ color: '#148c14', fontWeight: '700', mb: 2 }}>
                                     Ámbito de Desempeño Profesional
                                 </Typography>
                                 <Typography variant="body2" sx={{ color: '#475569', lineHeight: 1.7 }}>
@@ -107,7 +107,7 @@ export default function CarreraHigiene() {
 
                         <Grid item xs={12} md={6}>
                             <Paper variant="outlined" sx={{ p: 3, backgroundColor: '#f8fafc', borderRadius: '12px', height: '100%', borderColor: '#e2e8f0' }}>
-                                <Typography variant="h6" sx={{ color: '#0f172a', fontWeight: '700', mb: 2 }}>
+                                <Typography variant="h6" sx={{ color: '#148c14', fontWeight: '700', mb: 2 }}>
                                     Competencias Clave del Egresado
                                 </Typography>
                                 <Typography variant="body2" sx={{ color: '#475569', lineHeight: 1.7 }}>
@@ -121,21 +121,21 @@ export default function CarreraHigiene() {
 
                     {/* Funciones del Técnico */}
                     <Box sx={{ mb: 6 }}>
-                        <Typography variant="h6" sx={{ color: '#0f172a', fontWeight: '700', mb: 2 }}>
+                        <Typography variant="h6" sx={{ color: '#148c14', fontWeight: '700', mb: 2 }}>
                             Funciones Principales del Técnico Superior
                         </Typography>
                         <List disablePadding>
                             <ListItem sx={{ px: 0, alignItems: 'flex-start' }}>
                                 <ListItemIcon sx={{ minWidth: 32, mt: 0.5 }}><AssignmentTurnedInIcon sx={{ color: '#10b981', fontSize: 18 }} /></ListItemIcon>
                                 <ListItemText
-                                    primary={<Typography variant="body2" sx={{ fontWeight: '600', color: '#0f172a' }}>Auditoría e Inspección</Typography>}
+                                    primary={<Typography variant="body2" sx={{ fontWeight: '600', color: '#148c14' }}>Auditoría e Inspección</Typography>}
                                     secondary="Supervisar las condiciones de seguridad en maquinarias, herramientas, instalaciones e indumentaria de protección personal en ambientes de trabajo."
                                 />
                             </ListItem>
                             <ListItem sx={{ px: 0, alignItems: 'flex-start', mt: 1.5 }}>
                                 <ListItemIcon sx={{ minWidth: 32, mt: 0.5 }}><EngineeringIcon sx={{ color: '#10b981', fontSize: 18 }} /></ListItemIcon>
                                 <ListItemText
-                                    primary={<Typography variant="body2" sx={{ fontWeight: '600', color: '#0f172a' }}>Capacitación y Ergonomía</Typography>}
+                                    primary={<Typography variant="body2" sx={{ fontWeight: '600', color: '#148c14' }}>Capacitación y Ergonomía</Typography>}
                                     secondary="Diseñar simulacros, planes de evacuación ante emergencias y dictar capacitaciones obligatorias según leyes nacionales y de la Ciudad."
                                 />
                             </ListItem>
@@ -144,7 +144,7 @@ export default function CarreraHigiene() {
 
                     {/* --- TABLA DINÁMICA CON DATA DEL GOOGLE SHEET --- */}
                     <Box sx={{ mt: 4 }}>
-                        <Typography variant="h5" sx={{ fontWeight: '700', color: '#0f172a', mb: 3 }}>
+                        <Typography variant="h5" sx={{ fontWeight: '700', color: '#148c14', mb: 3 }}>
                             Plan de Estudios Actualizado
                         </Typography>
 
@@ -156,7 +156,7 @@ export default function CarreraHigiene() {
                         ) : (
                             <TableContainer component={Paper} variant="outlined" sx={{ borderRadius: '12px', overflow: 'hidden', borderColor: '#e2e8f0' }}>
                                 <Table>
-                                    <TableHead sx={{ backgroundColor: '#0f172a' }}>
+                                    <TableHead sx={{ backgroundColor: '#148c14' }}>
                                         <TableRow>
                                             <TableCell sx={{ color: '#ffffff', fontWeight: '700' }}>Año</TableCell>
                                             <TableCell sx={{ color: '#ffffff', fontWeight: '700' }}>Materia</TableCell>
@@ -176,7 +176,7 @@ export default function CarreraHigiene() {
                                                 }}
                                             >
                                                 <TableCell sx={{ fontWeight: '600', color: '#334155', whiteSpace: 'nowrap' }}>{item.anio}</TableCell>
-                                                <TableCell sx={{ fontWeight: '700', color: '#0f172a' }}>{item.materia}</TableCell>
+                                                <TableCell sx={{ fontWeight: '700', color: '#148c14' }}>{item.materia}</TableCell>
                                                 <TableCell sx={{ color: '#475569' }}>{item.horas} hs</TableCell>
                                                 <TableCell sx={{ color: '#475569', fontWeight: '500' }}>{item.docente}</TableCell>
                                                 <TableCell sx={{ color: '#10b981', fontWeight: '600', fontSize: '0.85rem' }}>{item.horario}</TableCell>

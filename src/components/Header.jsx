@@ -4,11 +4,22 @@ import SchoolIcon from '@mui/icons-material/School';
 
 export default function Header() {
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: '#0f172a', borderBottom: '2px solid #0284c7' }}>
+    <AppBar position="sticky" sx={{ backgroundColor: '#148c14', borderBottom: '2px solid #3264be' }}>
       <Container maxWidth="lg">
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <SchoolIcon sx={{ color: '#0284c7', fontSize: 28 }} />
+            {/* Reemplazo del ícono por la imagen del logo */}
+            <Box
+              component="img"
+              src="https://ifts19.edu.ar/sitio/src/images/slides/logo%20ifts.png"
+              alt="Logo IFTS 19"
+              sx={{
+                height: 28, // Ajustá el tamaño para que coincida con el fontSize que tenías
+                width: 'auto',
+                objectFit: 'contain'
+              }}
+            />
+
             <Typography variant="h6" sx={{ fontWeight: '700', letterSpacing: '.5px' }}>
               IFTS Nº 19
             </Typography>
