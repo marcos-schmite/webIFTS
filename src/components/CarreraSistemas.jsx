@@ -35,7 +35,6 @@ export default function CarreraSistemas() {
                             anio: fila[1],
                             materia: fila[2],
                             horas: fila[3],
-                            docente: fila[4],
                             horario: fila[5]
                         };
                     })
@@ -208,7 +207,6 @@ export default function CarreraSistemas() {
                                             <TableCell sx={{ color: '#ffffff', fontWeight: '700' }}>Año</TableCell>
                                             <TableCell sx={{ color: '#ffffff', fontWeight: '700' }}>Materia</TableCell>
                                             <TableCell sx={{ color: '#ffffff', fontWeight: '700' }}>Carga Horaria</TableCell>
-                                            <TableCell sx={{ color: '#ffffff', fontWeight: '700' }}>Docente</TableCell>
                                             <TableCell sx={{ color: '#ffffff', fontWeight: '700' }}>Horarios Cursada</TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -225,7 +223,6 @@ export default function CarreraSistemas() {
                                                 <TableCell sx={{ fontWeight: '600', color: '#334155', whiteSpace: 'nowrap' }}>{item.anio}</TableCell>
                                                 <TableCell sx={{ fontWeight: '700', color: '#148c14' }}>{item.materia}</TableCell>
                                                 <TableCell sx={{ color: '#475569' }}>{item.horas} hs</TableCell>
-                                                <TableCell sx={{ color: '#475569', fontWeight: '500' }}>{item.docente}</TableCell>
                                                 <TableCell sx={{ color: '#3264be', fontWeight: '600', fontSize: '0.85rem' }}>{item.horario}</TableCell>
                                             </TableRow>
                                         ))}
