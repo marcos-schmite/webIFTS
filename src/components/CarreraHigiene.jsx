@@ -2,19 +2,18 @@ import React, { useState, useEffect } from 'react';
 import {
     Box, Container, Typography, Paper, Grid, Divider, List, ListItem,
     ListItemIcon, ListItemText, Table, TableBody, TableCell, TableContainer,
-    TableHead, TableRow, CircularProgress
+    TableHead, TableRow, CircularProgress, Button, Tooltip
 } from '@mui/material';
-import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import ShieldIcon from '@mui/icons-material/Shield';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import EngineeringIcon from '@mui/icons-material/Engineering';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 export default function CarreraHigiene() {
     const [materias, setMaterias] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [horasTotales, setHorasTotales] = useState(0); // <-- Nuevo Estado
+    const [horasTotales, setHorasTotales] = useState(0);
 
-    // Reutilizamos el mismo ID del Google Sheet centralizado que creamos
     const SHEET_ID = '12ITJUMpBEGZ5Dj8u4abeG9Hf_EgmRDVhD7RZ75LZeVA';
     const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 
@@ -22,14 +21,12 @@ export default function CarreraHigiene() {
         fetch(csvUrl)
             .then((response) => response.text())
             .then((text) => {
-                // Parsear las filas del CSV
                 const filas = text.split('\n').map((fila) => {
                     return fila.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(celda => celda.replace(/^"|"\r?$/g, '').trim());
                 });
 
                 const encabezados = filas[0];
 
-                // Transformar las filas en objetos y filtrar únicamente por "Higiene"
                 const datosTransformados = filas.slice(1)
                     .map((fila) => {
                         if (fila.length < encabezados.length) return null;
@@ -54,7 +51,7 @@ export default function CarreraHigiene() {
                 console.error("Error cargando las materias desde Google Sheets:", error);
                 setLoading(false);
             });
-    }, []);
+    }, [csvUrl]);
 
     return (
         <Box id="higiene" sx={{ backgroundColor: '#ffffff', py: { xs: 8, md: 10 }, borderTop: '1px solid #e2e8f0' }}>
@@ -63,18 +60,29 @@ export default function CarreraHigiene() {
 
                     {/* Encabezado Principal de la Carrera */}
                     <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 4 }}>
-                        <Grid item>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-                                <HealthAndSafetyIcon sx={{ color: '#10b981', fontSize: 36 }} />
-                                <Typography variant="h4" sx={{ fontWeight: '800', color: '#148c14', fontSize: { xs: '28px', md: '36px' } }}>
+                        <Grid item xs={12}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1.5, flexWrap: 'wrap' }}>
+                                {/* Modificación: Logo en reemplazo del ícono */}
+                                <Box
+                                    component="img"
+                                    src="https://ifts19.edu.ar/sitio/src/images/slides/logo%20ifts.png"
+                                    alt="Logo IFTS 19"
+                                    sx={{ 
+                                        height: { xs: 32, md: 40 }, 
+                                        width: 'auto', 
+                                        objectFit: 'contain' 
+                                    }}
+                                />
+                                <Typography variant="h4" sx={{ fontWeight: '800', color: '#148c14', fontSize: { xs: '24px', md: '36px' } }}>
                                     Higiene y Seguridad en el Trabajo
                                 </Typography>
                             </Box>
+                            
                             <Typography variant="subtitle1" sx={{ color: '#64748b', fontWeight: '600' }}>
                                 Título Oficial con Validez Nacional • Plan de Cursada Optimizado
                             </Typography>
-                            {/* Bloque estético de horas totales en verde */}
-                            <Typography variant="body2" sx={{ mt: 1, color: '#065f46', fontWeight: '700', backgroundColor: '#d1fae5', display: 'inline-block', px: 2, py: 0.5, borderRadius: '20px' }}>
+                            
+                            <Typography variant="body2" sx={{ mt: 1.5, color: '#065f46', fontWeight: '700', backgroundColor: '#d1fae5', display: 'inline-block', px: 2, py: 0.5, borderRadius: '20px' }}>
                                 Carga Horaria Total del Plan: {loading ? '...' : `${horasTotales} horas reloj`}
                             </Typography>
                         </Grid>
@@ -129,7 +137,7 @@ export default function CarreraHigiene() {
                                 <ListItemIcon sx={{ minWidth: 32, mt: 0.5 }}><AssignmentTurnedInIcon sx={{ color: '#10b981', fontSize: 18 }} /></ListItemIcon>
                                 <ListItemText
                                     primary={<Typography variant="body2" sx={{ fontWeight: '600', color: '#148c14' }}>Auditoría e Inspección</Typography>}
-                                    secondary="Supervisar las condiciones de seguridad en maquinarias, herramientas, instalaciones e indumentaria de protección personal en ambientes de trabajo."
+                                    secondary="Supervisar las condiciones de seguridad en maquinarias, herramientas, installations e indumentaria de protección personal en ambientes de trabajo."
                                 />
                             </ListItem>
                             <ListItem sx={{ px: 0, alignItems: 'flex-start', mt: 1.5 }}>
@@ -144,9 +152,48 @@ export default function CarreraHigiene() {
 
                     {/* --- TABLA DINÁMICA CON DATA DEL GOOGLE SHEET --- */}
                     <Box sx={{ mt: 4 }}>
-                        <Typography variant="h5" sx={{ fontWeight: '700', color: '#148c14', mb: 3 }}>
-                            Plan de Estudios Actualizado
-                        </Typography>
+                        {/* Modificación: Título agrupado responsivamente junto a los botones de descarga */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3, flexWrap: 'wrap' }}>
+                            <Typography variant="h5" sx={{ fontWeight: '700', color: '#148c14', flexGrow: 1 }}>
+                                Plan de Estudios Actualizado
+                            </Typography>
+                            
+                            {/* Botón Descargar Plan Nuevo */}
+                            <Tooltip title="Descargar Plan Nuevo (HYS)" arrow>
+                                <Button
+                                    component="a"
+                                    href="https://ifts19.edu.ar/sitio/src/download/Plan%20Nuevo%20HYS.pdf"
+                                    download="Plan_Nuevo_HYS.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    variant="outlined"
+                                    color="success"
+                                    startIcon={<PictureAsPdfIcon />}
+                                    size="small"
+                                    sx={{ borderRadius: '8px', textTransform: 'none', fontWeight: '600' }}
+                                >
+                                    Plan Nuevo
+                                </Button>
+                            </Tooltip>
+
+                            {/* Botón Descargar Plan Viejo */}
+                            <Tooltip title="Descargar Plan Viejo (HYS)" arrow>
+                                <Button
+                                    component="a"
+                                    href="https://ifts19.edu.ar/sitio/src/download/Plan%20Viejo%20HYS.pdf"
+                                    download="Plan_Viejo_HYS.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    variant="outlined"
+                                    color="error"
+                                    startIcon={<PictureAsPdfIcon />}
+                                    size="small"
+                                    sx={{ borderRadius: '8px', textTransform: 'none', fontWeight: '600' }}
+                                >
+                                    Plan Viejo
+                                </Button>
+                            </Tooltip>
+                        </Box>
 
                         {loading ? (
                             <Box sx={{ display: 'flex', justifyContent: 'center', py: 4, gap: 2, alignItems: 'center' }}>

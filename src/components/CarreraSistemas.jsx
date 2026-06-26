@@ -2,36 +2,31 @@ import React, { useState, useEffect } from 'react';
 import {
     Box, Container, Typography, Paper, Grid, Divider, List, ListItem,
     ListItemIcon, ListItemText, Table, TableBody, TableCell, TableContainer,
-    TableHead, TableRow, CircularProgress
+    TableHead, TableRow, CircularProgress, Button, Tooltip
 } from '@mui/material';
-import CodeIcon from '@mui/icons-material/Code';
 import TerminalIcon from '@mui/icons-material/Terminal';
 import AssignmentRegIcon from '@mui/icons-material/AssignmentTurnedIn';
 import HubIcon from '@mui/icons-material/Hub';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 export default function CarreraSistemas() {
     const [materias, setMaterias] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [horasTotales, setHorasTotales] = useState(0); // <-- Nuevo Estado
-    // ID del Google Sheet que creamos para vos
+    const [horasTotales, setHorasTotales] = useState(0);
+
     const SHEET_ID = '12ITJUMpBEGZ5Dj8u4abeG9Hf_EgmRDVhD7RZ75LZeVA';
-    // URL para exportar la primera hoja directamente como CSV
     const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 
     useEffect(() => {
         fetch(csvUrl)
             .then((response) => response.text())
             .then((text) => {
-                // Parsear las filas del CSV de forma simple
                 const filas = text.split('\n').map((fila) => {
-                    // Expresión regular para separar por comas respetando los textos entre comillas
                     return fila.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(celda => celda.replace(/^"|"\r?$/g, '').trim());
                 });
 
-                // La primera fila contiene los encabezados: Carrera, Anio, Materia, Horas, Docente, Horario
                 const encabezados = filas[0];
 
-                // Transformar las filas en objetos y filtrar solo las de "Análisis de Sistemas"
                 const datosTransformados = filas.slice(1)
                     .map((fila) => {
                         if (fila.length < encabezados.length) return null;
@@ -56,7 +51,7 @@ export default function CarreraSistemas() {
                 console.error("Error cargando las materias desde Google Sheets:", error);
                 setLoading(false);
             });
-    }, []);
+    }, [csvUrl]);
 
     return (
         <Box id="sistemas" sx={{ backgroundColor: '#f8fafc', py: { xs: 8, md: 10 }, borderTop: '1px solid #e2e8f0' }}>
@@ -65,18 +60,29 @@ export default function CarreraSistemas() {
 
                     {/* Encabezado Principal de la Carrera */}
                     <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 4 }}>
-                        <Grid item>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-                                <CodeIcon sx={{ color: '#3264be', fontSize: 36 }} />
-                                <Typography variant="h4" sx={{ fontWeight: '800', color: '#148c14', fontSize: { xs: '28px', md: '36px' } }}>
+                        <Grid item xs={12}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1.5, flexWrap: 'wrap' }}>
+                                {/* Modificación: Logo institucional en reemplazo del CodeIcon */}
+                                <Box
+                                    component="img"
+                                    src="https://ifts19.edu.ar/sitio/src/images/slides/logo%20ifts.png"
+                                    alt="Logo IFTS 19"
+                                    sx={{ 
+                                        height: { xs: 32, md: 40 }, 
+                                        width: 'auto', 
+                                        objectFit: 'contain' 
+                                    }}
+                                />
+                                <Typography variant="h4" sx={{ fontWeight: '800', color: '#148c14', fontSize: { xs: '24px', md: '36px' } }}>
                                     Análisis de Sistemas
                                 </Typography>
                             </Box>
+                            
                             <Typography variant="subtitle1" sx={{ color: '#64748b', fontWeight: '600' }}>
                                 Título Oficial • Resolución Ministerial: <strong>RS-2023-6336-GCABA-MEDGC</strong> (Plan Nuevo)
                             </Typography>
-                            {/* Bloque estético de horas totales */}
-                            <Typography variant="body2" sx={{ mt: 1, color: '#3264be', fontWeight: '700', backgroundColor: '#e0f2fe', display: 'inline-block', px: 2, py: 0.5, borderRadius: '20px' }}>
+                            
+                            <Typography variant="body2" sx={{ mt: 1.5, color: '#3264be', fontWeight: '700', backgroundColor: '#e0f2fe', display: 'inline-block', px: 2, py: 0.5, borderRadius: '20px' }}>
                                 Carga Horaria Total del Plan: {loading ? '...' : `${horasTotales} horas reloj`}
                             </Typography>
                         </Grid>
@@ -146,9 +152,48 @@ export default function CarreraSistemas() {
 
                     {/* --- TABLA DINÁMICA CON DATA DEL GOOGLE SHEET --- */}
                     <Box sx={{ mt: 4 }}>
-                        <Typography variant="h5" sx={{ fontWeight: '700', color: '#148c14', mb: 3 }}>
-                            Plan de Estudios Actualizado
-                        </Typography>
+                        {/* Modificación: Título de la tabla con los botones de descarga integrados a la derecha */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3, flexWrap: 'wrap' }}>
+                            <Typography variant="h5" sx={{ fontWeight: '700', color: '#148c14', flexGrow: 1 }}>
+                                Plan de Estudios Actualizado
+                            </Typography>
+                            
+                            {/* Botón Descargar Plan Nuevo */}
+                            <Tooltip title="Descargar Plan Nuevo (ADS)" arrow>
+                                <Button
+                                    component="a"
+                                    href="https://ifts19.edu.ar/sitio/src/download/Plan%20Nuevo%20ADS.pdf"
+                                    download="Plan_Nuevo_ADS.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    variant="outlined"
+                                    color="success"
+                                    startIcon={<PictureAsPdfIcon />}
+                                    size="small"
+                                    sx={{ borderRadius: '8px', textTransform: 'none', fontWeight: '600' }}
+                                >
+                                    Plan Nuevo
+                                </Button>
+                            </Tooltip>
+
+                            {/* Botón Descargar Plan Viejo */}
+                            <Tooltip title="Descargar Plan Viejo (ADS)" arrow>
+                                <Button
+                                    component="a"
+                                    href="https://ifts19.edu.ar/sitio/src/download/Plan%20Viejo%20ADS.pdf"
+                                    download="Plan_Viejo_ADS.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    variant="outlined"
+                                    color="error"
+                                    startIcon={<PictureAsPdfIcon />}
+                                    size="small"
+                                    sx={{ borderRadius: '8px', textTransform: 'none', fontWeight: '600' }}
+                                >
+                                    Plan Viejo
+                                </Button>
+                            </Tooltip>
+                        </Box>
 
                         {loading ? (
                             <Box sx={{ display: 'flex', justifyContent: 'center', py: 4, gap: 2, alignItems: 'center' }}>
