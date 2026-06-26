@@ -1,10 +1,25 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Button, Box, Container } from '@mui/material';
-import SchoolIcon from '@mui/icons-material/School';
 
 export default function Header() {
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: '#148c14', borderBottom: '2px solid #3264be' }}>
+    <AppBar 
+      position="sticky" 
+      sx={{ 
+        borderBottom: '2px solid #3264be',
+        // 1. Definimos la animación infinita de 10 segundos
+        animation: 'cambioColor 10s ease-in-out infinite alternate',
+        // 2. Creamos los Keyframes nativos dentro del sx
+        '@keyframes cambioColor': {
+          '0%': {
+            backgroundColor: '#148c14', // Color Inicial (Verde)
+          },
+          '100%': {
+            backgroundColor: '#3264be', // Color Final (Azul)
+          },
+        },
+      }}
+    >
       <Container maxWidth="lg">
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -14,7 +29,7 @@ export default function Header() {
               src="https://ifts19.edu.ar/sitio/src/images/slides/logo%20ifts.png"
               alt="Logo IFTS 19"
               sx={{
-                height: 28, // Ajustá el tamaño para que coincida con el fontSize que tenías
+                height: 28, 
                 width: 'auto',
                 objectFit: 'contain'
               }}
