@@ -174,24 +174,6 @@ export default function CarreraHigiene() {
                                     Plan Nuevo
                                 </Button>
                             </Tooltip>
-
-                            {/* Botón Descargar Plan Viejo */}
-                            <Tooltip title="Descargar Plan Viejo (HYS)" arrow>
-                                <Button
-                                    component="a"
-                                    href="https://ifts19.edu.ar/sitio/src/download/Plan%20Viejo%20HYS.pdf"
-                                    download="Plan_Viejo_HYS.pdf"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    variant="outlined"
-                                    color="error"
-                                    startIcon={<PictureAsPdfIcon />}
-                                    size="small"
-                                    sx={{ borderRadius: '8px', textTransform: 'none', fontWeight: '600' }}
-                                >
-                                    Plan Viejo
-                                </Button>
-                            </Tooltip>
                         </Box>
 
                         {loading ? (

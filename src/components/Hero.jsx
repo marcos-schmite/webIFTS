@@ -8,25 +8,19 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import CloseIcon from '@mui/icons-material/Close';
 
 // --- SUB-COMPONENTE PARA EL EFECTO MÁQUINA DE ESCRIBIR ---
-function TextoTipeado({ texto, velocidad = 25 }) {
+function TextoTipeado({ texto, velocidad = 100 }) {
   const [textoVisible, setTextoVisible] = useState('');
 
   useEffect(() => {
-    let i = 0;
-    setTextoVisible(''); // Reiniciar el texto al cambiar de carrera
-    
-    const tictac = setInterval(() => {
-      if (i < texto.length) {
-        console.log(i)
-        // Usamos la función de actualización de estado basada en el previo para evitar problemas de sincronización
-        setTextoVisible((prev) => prev + texto.charAt(i));
-        i++;
-      } else {
-        clearInterval(tictac);
-      }
-    }, velocidad);
+    setTextoVisible('');
+    let acumulador = '';
 
-    return () => clearInterval(tictac);
+    for (let i = 0; i < texto.length; i++) {
+      setTimeout(() => {
+        acumulador += texto[i];
+        setTextoVisible(acumulador);
+      }, i * velocidad);
+    }
   }, [texto, velocidad]);
 
   return <>{textoVisible}</>;
@@ -39,12 +33,12 @@ export default function Hero() {
 
   const infoCarreras = [
     {
-      titulo: "Annálisis de Sistemas",
-      descripcion: "Ell Instituto de Formación Técnica Superior Nº 19 del GCABA dicta la Tecnicatura Superior en Análisis de Sistemas con planes de estudio modernos, prácticas profesionalizantes y títulos oficiales orientados al desarrollo de software y tecnología."
+      titulo: "Análisis de Sistemas",
+      descripcion: "El Instituto de Formación Técnica Superior Nº 19 del GCABA dicta la Tecnicatura Superior en Análisis de Sistemas con planes de estudio modernos, prácticas profesionalizantes y títulos oficiales orientados al desarrollo de software y tecnología."
     },
     {
-      titulo: "Hiigiene y Seguridad en el Trabajo",
-      descripcion: "Nuuestra Tecnicatura Superior en Higiene y Seguridad prepara profesionales capacitados para la prevención de riesgos laborales, diseño de planes de evacuación y gestión ambiental en todo tipo de organizaciones e industrias."
+      titulo: "Higiene y Seguridad en el Trabajo",
+      descripcion: "Nuestra Tecnicatura Superior en Higiene y Seguridad prepara profesionales capacitados para la prevención de riesgos laborales, diseño de planes de evacuación y gestión ambiental en todo tipo de organizaciones e industrias."
     }
   ];
 
@@ -66,12 +60,12 @@ export default function Hero() {
   };
 
   return (
-    <Box 
-      id="inicio" 
-      sx={{ 
+    <Box
+      id="inicio"
+      sx={{
         position: 'relative',
-        pt: { xs: 6, md: 10 }, 
-        pb: { xs: 8, md: 12 }, 
+        pt: { xs: 6, md: 10 },
+        pb: { xs: 8, md: 12 },
         borderBottom: '1px solid #e2e8f0',
         overflow: 'hidden',
         minHeight: { md: '80vh' },
@@ -146,10 +140,10 @@ export default function Hero() {
       )}
 
       {/* --- CONTENIDO PRINCIPAL --- */}
-      <Container 
-        maxWidth="lg" 
-        sx={{ 
-          position: 'relative', 
+      <Container
+        maxWidth="lg"
+        sx={{
+          position: 'relative',
           zIndex: 2,
           opacity: viendoVideo ? 0 : 1,
           transform: viendoVideo ? 'scale(0.93) translateY(20px)' : 'scale(1) translateY(0px)',
@@ -157,11 +151,11 @@ export default function Hero() {
           transition: 'opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
         }}
       >
-        
+
         {/* Selector de Carreras */}
         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 6 }}>
-          <Tabs 
-            value={carreraActiva} 
+          <Tabs
+            value={carreraActiva}
             onChange={(e, nuevoValor) => setCarreraActiva(nuevoValor)}
             textColor="primary"
             indicatorColor="primary"
@@ -200,7 +194,7 @@ export default function Hero() {
           <Typography variant="overline" sx={{ color: '#3264be', fontWeight: '800', letterSpacing: 2, display: 'block', mb: 1 }}>
             Educación Superior Pública y Gratuita
           </Typography>
-          
+
           {/* Título Tipeado (Se usa 'key' para forzar el reinicio de la animación al cambiar de pestaña) */}
           <Typography variant="h3" component="h1" sx={{ color: '#148c14', fontWeight: '900', mb: 3, fontSize: { xs: '36px', md: '52px' }, lineHeight: 1.15, minHeight: { xs: '84px', md: '120px' } }}>
             <TextoTipeado key={`titulo-${carreraActiva}`} texto={carreraActual.titulo} velocidad={40} />
@@ -210,21 +204,21 @@ export default function Hero() {
           <Typography variant="h6" sx={{ color: '#334155', fontWeight: '500', mb: 4, lineHeight: 1.8, fontSize: { xs: '16px', md: '20px' }, minHeight: { xs: '140px', md: '110px' } }}>
             <TextoTipeado key={`desc-${carreraActiva}`} texto={carreraActual.descripcion} velocidad={12} />
           </Typography>
-          
+
           {/* Botones de acción (Fijos, no se tipean para mantener usabilidad) */}
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
-            <Button 
-              variant="contained" 
-              size="large" 
-              href="#inscripciones" 
+            <Button
+              variant="contained"
+              size="large"
+              href="#inscripciones"
               sx={{ backgroundColor: '#148c14', '&:hover': { backgroundColor: '#1e293b' }, px: 4, py: 1.8, textTransform: 'none', fontWeight: '700', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(15, 23, 42, 0.2)' }}
             >
               Comenzar Preingreso 2026
             </Button>
-            
-            <Button 
-              variant="contained" 
-              size="large" 
+
+            <Button
+              variant="contained"
+              size="large"
               startIcon={<PlayArrowIcon />}
               onClick={handleVerVideo}
               sx={{ backgroundColor: '#3264be', '&:hover': { backgroundColor: '#1e293b' }, px: 4, py: 1.8, textTransform: 'none', fontWeight: '700', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(15, 23, 42, 0.2)' }}
@@ -232,11 +226,11 @@ export default function Hero() {
               Ver Video Presentación
             </Button>
 
-            <Button 
-              variant="outlined" 
-              size="large" 
+            <Button
+              variant="outlined"
+              size="large"
               startIcon={<CalendarMonthIcon />}
-              href="https://aulasvirtuales.bue.edu.ar/" 
+              href="https://aulasvirtuales.bue.edu.ar/"
               target="_blank"
               rel="noopener"
               sx={{ color: '#148c14', borderColor: '#148c14', backgroundColor: 'rgba(255,255,255,0.7)', '&:hover': { borderColor: '#148c14', backgroundColor: '#ffffff' }, px: 3, textTransform: 'none', fontWeight: '700', borderRadius: '8px' }}
@@ -251,7 +245,7 @@ export default function Hero() {
           <Typography variant="h6" align="center" sx={{ color: '#475569', fontWeight: '800', textTransform: 'uppercase', letterSpacing: 1.5, mb: 4, fontSize: '13px' }}>
             Propósito Institucional
           </Typography>
-          
+
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
               <Paper variant="transparent" sx={{ p: 3, backgroundColor: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(8px)', border: '1px solid rgba(226, 232, 240, 0)', borderRadius: '12px' }}>
