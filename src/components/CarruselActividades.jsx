@@ -3,13 +3,28 @@ import { Box, Container, Typography, IconButton, CircularProgress } from '@mui/m
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
+// Función auxiliar para transformar enlaces de Drive a enlaces web directos
+const convertirLinkDrive = (url) => {
+    if (!url) return '';
+    
+    if (url.includes('drive.google.com')) {
+        const regex = /(?:https?:\/\/)?(?:drive\.google\.com\/)(?:file\/d\/|open\?id=)([^/\?#&]+)/;
+        const match = url.match(regex);
+        
+        if (match && match[1]) {
+            const id = match[1];
+            // Este endpoint suele saltarse el 403 Forbidden de manera excelente en webs
+            return `https://lh3.googleusercontent.com/d/${id}`;
+        }
+    }
+    return url;
+};
 export default function CarruselActividades() {
     const [imagenes, setImagenes] = useState([]);
     const [indiceActual, setIndiceActual] = useState(0);
     const [cargando, setCargando] = useState(true);
 
     const SHEET_ID = '12ITJUMpBEGZ5Dj8u4abeG9Hf_EgmRDVhD7RZ75LZeVA';
-    // Usamos exactamente el formato /export de las carreras + el gid de las imágenes
     const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=1126888506`;
 
     useEffect(() => {
@@ -25,17 +40,20 @@ export default function CarruselActividades() {
                 return response.text();
             })
             .then((text) => {
-                // Mismo parseador robusto por regex que usás en las carreras
                 const filas = text.split('\n').map((fila) => {
                     return fila.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(celda => celda.replace(/^"|"\r?$/g, '').trim());
                 });
-                
+
                 const datosTransformados = filas.slice(1)
                     .map((fila) => {
                         if (!fila[0]) return null;
+
+                        // IMPORTANTE: Convertimos la URL aquí mismo antes de guardarla en el estado
+                        const urlConvertida = convertirLinkDrive(fila[0]);
+
                         return {
-                            url: fila[0],     // Columna A
-                            titulo: fila[1]   // Columna B
+                            url: urlConvertida, // Columna A (ya procesada)
+                            titulo: fila[1]     // Columna B
                         };
                     })
                     .filter(item => item && item.url.startsWith('http'));
@@ -82,12 +100,12 @@ export default function CarruselActividades() {
                     </Box>
                 ) : (
                     <>
-                        <Box 
-                            sx={{ 
-                                position: 'relative', 
-                                width: '100%', 
-                                height: { xs: '260px', sm: '420px', md: '480px' }, 
-                                borderRadius: '16px', 
+                        <Box
+                            sx={{
+                                position: 'relative',
+                                width: '100%',
+                                height: { xs: '260px', sm: '420px', md: '480px' },
+                                borderRadius: '16px',
                                 overflow: 'hidden',
                                 boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
                                 backgroundColor: '#0f172a'
@@ -106,17 +124,16 @@ export default function CarruselActividades() {
                             />
 
                             {imagenes[indiceActual].titulo && (
-                                <Box 
-                                    sx={{ 
-                                        position: 'absolute', 
-                                        bottom: 0, left: 0, right: 0, 
-                                        backgroundColor: 'rgba(15, 23, 42, 0.75)', 
+                                <Box
+                                    sx={{
+                                        position: 'absolute',
+                                        bottom: 0, left: 0, right: 0,
+                                        backgroundColor: 'rgba(15, 23, 42, 0.75)',
                                         backdropFilter: 'blur(4px)',
-                                        color: '#ffffff', 
-                                        p: 2, 
-                                        textAlign: 'center' 
+                                        color: '#ffffff',
+                                        p: 2,
+                                        textAlign: 'center'
                                     }}
-                                // Corregido: Propiedades sx limpias para evitar errores en DOM
                                 >
                                     <Typography variant="subtitle1" sx={{ fontWeight: '600' }}>
                                         {imagenes[indiceActual].titulo}
@@ -124,14 +141,14 @@ export default function CarruselActividades() {
                                 </Box>
                             )}
 
-                            <IconButton 
+                            <IconButton
                                 onClick={anteriorFoto}
                                 sx={{ position: 'absolute', top: '50%', left: 16, transform: 'translateY(-50%)', backgroundColor: 'rgba(255,255,255,0.2)', color: '#ffffff', '&:hover': { backgroundColor: 'rgba(255,255,255,0.4)' } }}
                             >
                                 <ArrowBackIosNewIcon fontSize="small" />
                             </IconButton>
 
-                            <IconButton 
+                            <IconButton
                                 onClick={siguienteFoto}
                                 sx={{ position: 'absolute', top: '50%', right: 16, transform: 'translateY(-50%)', backgroundColor: 'rgba(255,255,255,0.2)', color: '#ffffff', '&:hover': { backgroundColor: 'rgba(255,255,255,0.4)' } }}
                             >
