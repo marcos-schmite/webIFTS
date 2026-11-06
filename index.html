@@ -1,13 +1,42 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="https://ifts19.edu.ar/sitio/src/images/slides/logo%20ifts.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IFTS19</title>
+    <title>IFTS N.º 19 · Educación técnica superior pública y gratuita</title>
+    <meta
+      name="description"
+      content="Instituto de Formación Técnica Superior N.º 19 de la Ciudad de Buenos Aires. Tecnicaturas gratuitas en Análisis de Sistemas e Higiene y Seguridad en el Trabajo."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="IFTS N.º 19" />
+    <meta
+      property="og:description"
+      content="Tecnicaturas superiores públicas y gratuitas en Análisis de Sistemas e Higiene y Seguridad en el Trabajo."
+    />
+    <meta property="og:image" content="https://ifts19.edu.ar/sitio/src/images/slides/logo%20ifts.png" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0f7f0f" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0d1420" />
+    <link rel="icon" type="image/png" href="https://ifts19.edu.ar/sitio/src/images/slides/logo%20ifts.png" />
+    <style>
+      html { background: #f4f6f5; }
+      html[data-dark] { background: #0d1420; color-scheme: dark; }
+    </style>
+    <!-- Aplica el modo guardado antes de pintar, para evitar un destello blanco en modo oscuro. -->
+    <script>
+      (function () {
+        var oscuro = false;
+        try {
+          var modo = localStorage.getItem('ifts19-modo') || 'system';
+          oscuro = modo === 'dark' || (modo === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+        } catch (e) {}
+        document.documentElement.setAttribute(oscuro ? 'data-dark' : 'data-light', '');
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>Este sitio necesita JavaScript. Escribinos a dfts_ifts19_de6@bue.edu.ar o llamá al (011) 2085-7745.</noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

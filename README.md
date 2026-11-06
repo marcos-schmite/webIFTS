@@ -1,16 +1,34 @@
-# React + Vite
+# Sitio del IFTS N.º 19
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sitio web del Instituto de Formación Técnica Superior N.º 19 (CABA), hecho con React, Vite y Material UI.
 
-Currently, two official plugins are available:
+## Cómo correrlo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev      # servidor local
+npm run build    # genera dist/
+npm run lint
+```
 
-## React Compiler
+El sitio se publica en Netlify. La configuración está en `netlify.toml`, que incluye la redirección a `index.html` necesaria para que las direcciones internas (como `/preingreso`) funcionen al recargar. En otro hosting habría que configurar una regla equivalente.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Dónde actualizar el contenido
 
-## Expanding the ESLint configuration
+Todo el contenido está en `src/data/`:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Qué cambia | Archivo |
+| --- | --- |
+| Horarios de cada cuatrimestre (`PERIODO_HORARIOS` y `DIVISIONES`) | `horarios.js` |
+| Fechas del preingreso (los estados se calculan solos) | `ingreso.js` |
+| Autoridades y docentes | `docentes.js` |
+| Plan de estudios y textos de las carreras | `carreras.js` |
+| Contacto, enlaces, PDF, constancias y menú | `sitio.js` |
+
+Las mesas de exámenes y los horarios en PDF se leen del servidor actual (`BASE_ARCHIVOS` en `sitio.js`). Si se reemplaza un PDF manteniendo el nombre, el sitio lo muestra sin cambios; si cambia el nombre, hay que actualizar `ARCHIVOS`. Si el servidor se da de baja, hay que mover los archivos y cambiar `BASE_ARCHIVOS`.
+
+Las fotos de **Actividades** se leen de la pestaña correspondiente de la planilla de Google (columna A: enlace, columna B: descripción). Si no hay filas o la planilla no responde, se muestran fotos de respaldo.
+
+## Modo claro y oscuro
+
+Por defecto sigue la preferencia del sistema; el botón del encabezado la cambia y queda guardada. Los colores están en `src/theme.js`.

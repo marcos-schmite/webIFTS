@@ -1,62 +1,117 @@
-import React from 'react';
-import { Box, Container, Grid, Typography, Divider, IconButton } from '@mui/material';
+import { Box, Container, Divider, Link, Typography } from '@mui/material';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
+import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
+import { Link as LinkRouter } from 'react-router-dom';
+import { CONTACTO, ENLACES, INSTITUTO, RUTAS } from '../data/sitio.js';
+import { fondoInstitucional } from '../theme.js';
+
+const COLUMNAS = [
+  {
+    titulo: 'Oferta académica',
+    enlaces: [
+      { etiqueta: 'Características de las carreras', to: RUTAS.oferta },
+      { etiqueta: 'Análisis de Sistemas', to: RUTAS.sistemas },
+      { etiqueta: 'Higiene y Seguridad en el Trabajo', to: RUTAS.higiene },
+      { etiqueta: 'Preingreso', to: RUTAS.preingreso },
+    ],
+  },
+  {
+    titulo: 'Estudiantes',
+    enlaces: [
+      { etiqueta: 'Horarios', to: RUTAS.regulares },
+      { etiqueta: 'Mesas de exámenes', to: RUTAS.calendario },
+      { etiqueta: 'Constancias', to: RUTAS.constancias },
+      { etiqueta: 'Egresados', to: RUTAS.egresados },
+      { etiqueta: 'SIU Guaraní', href: ENLACES.siuGuarani },
+      { etiqueta: 'Aula Virtual', href: ENLACES.aulaVirtual },
+    ],
+  },
+];
+
+const estiloEnlace = { color: 'inherit', display: 'inline-block', py: 0.35, fontSize: '0.92rem', textDecorationColor: 'rgba(255,255,255,0.6)' };
+
+function FilaContacto({ icono: Icono, href, externo, children }) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, mb: 1 }}>
+      <Icono fontSize="small" sx={{ mt: '2px', flexShrink: 0 }} aria-hidden />
+      <Link
+        href={href}
+        {...(externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        sx={{ ...estiloEnlace, py: 0, overflowWrap: 'anywhere' }}
+      >
+        {children}
+      </Link>
+    </Box>
+  );
+}
 
 export default function Footer() {
   return (
-    <Box 
-      id="contacto" 
-      sx={{ 
-        // 1. Ajuste de color base para textos secundarios (más claro para mejor legibilidad)
-        color: '#e2e8f0', 
-        pt: 8, 
-        pb: 4,
-        // 2. Misma animación lenta, constante y alternada que el Header
-        animation: 'cambioColorFooter 10s ease-in-out infinite alternate',
-        '@keyframes cambioColorFooter': {
-          '0%': {
-            backgroundColor: '#148c14', // Verde
-          },
-          '100%': {
-            backgroundColor: '#3264be', // Azul
-          },
-        },
-      }}
-    >
-      <Container maxWidth="lg">
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" sx={{ color: '#ffffff', fontWeight: '700', mb: 2 }}>
-              IFTS Nº 19
+    <Box component="footer" sx={fondoInstitucional}>
+      <Container maxWidth="lg" sx={{ pt: { xs: 6, md: 7 }, pb: 3 }}>
+        <Box
+          sx={{
+            display: 'grid',
+            gap: { xs: 4, md: 5 },
+            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1.4fr 1fr 1fr 1.25fr' },
+          }}
+        >
+          <Box>
+            <Typography component="p" sx={{ fontWeight: 800, fontSize: '1.2rem', mb: 1 }}>
+              {INSTITUTO.nombre}
             </Typography>
-            <Typography variant="body2" sx={{ lineHeight: 1.7, maxWidth: '400px', color: '#f8fafc' }}>
-              Instituto Superior dependiente de la Agencia de Aprendizaje a lo Largo de la Vida (GCABA). Comprometidos con la excelencia académica en formación técnica profesional.
+            <Typography variant="body2" sx={{ lineHeight: 1.65, maxWidth: 320 }}>
+              {INSTITUTO.nombreCompleto} ({INSTITUTO.distrito}). Educación superior pública y gratuita de la Ciudad de Buenos Aires.
             </Typography>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" sx={{ color: '#ffffff', fontWeight: '700', mb: 2 }}>
-              Contacto y Ubicación
+          </Box>
+
+          {COLUMNAS.map((columna) => (
+            <Box component="nav" aria-label={columna.titulo} key={columna.titulo}>
+              <Typography component="p" sx={{ fontWeight: 700, mb: 1 }}>
+                {columna.titulo}
+              </Typography>
+              <Box component="ul" sx={{ listStyle: 'none', m: 0, p: 0 }}>
+                {columna.enlaces.map((enlace) => (
+                  <li key={enlace.etiqueta}>
+                    {enlace.to ? (
+                      <Link component={LinkRouter} to={enlace.to} sx={estiloEnlace}>
+                        {enlace.etiqueta}
+                      </Link>
+                    ) : (
+                      <Link href={enlace.href} target="_blank" rel="noopener noreferrer" sx={estiloEnlace}>
+                        {enlace.etiqueta}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </Box>
+            </Box>
+          ))}
+
+          <Box>
+            <Typography component="p" sx={{ fontWeight: 700, mb: 1 }}>
+              Contacto
             </Typography>
-            <Typography variant="body2" sx={{ mb: 1, color: '#f8fafc' }}>📍 Catamarca 143, Cristóbal Colón, CABA</Typography>
-            <Typography variant="body2" sx={{ mb: 1, color: '#f8fafc' }}>📞 (011) 2085-7745</Typography>
-            <Typography variant="body2" sx={{ mb: 2, color: '#f8fafc' }}>✉ dfts_ifts19_de6@bue.edu.ar</Typography>
-            <IconButton 
-              href="https://www.instagram.com/ifts_19/" 
-              target="_blank" 
-              rel="noopener" 
-              sx={{ color: '#ffffff', '&:hover': { color: '#cbd5e1' }, p: 0 }}
-            >
-              <InstagramIcon />
-            </IconButton>
-          </Grid>
-        </Grid>
-        
-        {/* Línea divisoria adaptada para que no resalte de forma brusca */}
-        <Divider sx={{ my: 4, borderColor: 'rgba(255, 255, 255, 0.15)' }} />
-        
-        {/* Texto de derechos reservados con contraste optimizado */}
-        <Typography variant="body2" align="center" sx={{ color: '#cbd5e1' }}>
-          © {new Date().getFullYear()} IFTS 19. Rediseño Institucional Sobrio. Todos los derechos reservados.
+            <FilaContacto icono={PlaceOutlinedIcon} href={CONTACTO.mapa} externo>
+              {CONTACTO.direccion}
+            </FilaContacto>
+            <FilaContacto icono={EmailOutlinedIcon} href={`mailto:${CONTACTO.email}`}>
+              {CONTACTO.email}
+            </FilaContacto>
+            <FilaContacto icono={PhoneOutlinedIcon} href={CONTACTO.telefonoEnlace}>
+              {CONTACTO.telefono}
+            </FilaContacto>
+            <FilaContacto icono={InstagramIcon} href={CONTACTO.instagram} externo>
+              {CONTACTO.instagramUsuario}
+            </FilaContacto>
+          </Box>
+        </Box>
+
+        <Divider sx={{ my: 3, borderColor: 'rgba(255, 255, 255, 0.25)' }} />
+        <Typography variant="body2" sx={{ textAlign: 'center' }}>
+          © {new Date().getFullYear()} {INSTITUTO.nombreCompleto}.
         </Typography>
       </Container>
     </Box>

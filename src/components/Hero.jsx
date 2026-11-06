@@ -1,296 +1,245 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Box, Typography, Button, Container, Grid, Paper, Tabs, Tab } from '@mui/material';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import GroupsIcon from '@mui/icons-material/Groups';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import ScienceIcon from '@mui/icons-material/Science';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import { useEffect, useRef, useState } from 'react';
+import { Box, Button, ButtonBase, Container, Paper, Tab, Tabs, Typography } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
 import CloseIcon from '@mui/icons-material/Close';
+import ComputerOutlinedIcon from '@mui/icons-material/ComputerOutlined';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
+import { Link as LinkRouter } from 'react-router-dom';
+import { ENLACES, INSTITUTO, RUTAS } from '../data/sitio.js';
+import { propsEnlace } from '../utils/enlaces.js';
+import { Antetitulo } from './Seccion.jsx';
 
-// --- SUB-COMPONENTE PARA EL EFECTO MÁQUINA DE ESCRIBIR ---
-function TextoTipeado({ texto, velocidad = 100 }) {
-  const [textoVisible, setTextoVisible] = useState('');
+const prefiereMenosMovimiento = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// El video pesa más de 100 MB: de fondo solo se reproduce en pantallas grandes
+// y sin ahorro de datos. En los demás casos se carga cuando la persona lo pide.
+const permiteVideoDeFondo = () =>
+  window.matchMedia('(min-width: 900px)').matches && !prefiereMenosMovimiento() && !navigator.connection?.saveData;
+
+const CARRERAS_HERO = [
+  {
+    pestana: 'Análisis de Sistemas',
+    titulo: 'Análisis de Sistemas',
+    descripcion:
+      'Tecnicatura superior con plan actualizado, prácticas profesionalizantes y título oficial, orientada al desarrollo de software y la tecnología.',
+    ruta: RUTAS.sistemas,
+  },
+  {
+    pestana: 'Higiene y Seguridad',
+    titulo: 'Higiene y Seguridad en el Trabajo',
+    descripcion:
+      'Tecnicatura superior para prevenir riesgos laborales, capacitar equipos y diseñar planes de seguridad en todo tipo de organizaciones.',
+    ruta: RUTAS.higiene,
+  },
+];
+
+const ACCESOS = [
+  { etiqueta: 'Horarios de cursada', icono: EventNoteOutlinedIcon, to: RUTAS.regulares },
+  { etiqueta: 'Mesas de exámenes', icono: CalendarMonthOutlinedIcon, to: RUTAS.calendario },
+  { etiqueta: 'Constancias', icono: DescriptionOutlinedIcon, to: RUTAS.constancias },
+  { etiqueta: 'Preingreso', icono: ChecklistOutlinedIcon, to: RUTAS.preingreso },
+  { etiqueta: 'SIU Guaraní', icono: SchoolOutlinedIcon, href: ENLACES.siuGuarani },
+  { etiqueta: 'Aula Virtual', icono: ComputerOutlinedIcon, href: ENLACES.aulaVirtual },
+];
+
+function TextoTipeado({ texto, velocidad }) {
+  const [visibles, setVisibles] = useState(() => (prefiereMenosMovimiento() ? texto.length : 0));
 
   useEffect(() => {
-    setTextoVisible('');
-    let acumulador = '';
+    if (visibles >= texto.length) return undefined;
+    const temporizador = setTimeout(() => setVisibles((n) => n + 1), velocidad);
+    return () => clearTimeout(temporizador);
+  }, [visibles, texto, velocidad]);
 
-    for (let i = 0; i < texto.length; i++) {
-      setTimeout(() => {
-        acumulador += texto[i];
-        setTextoVisible(acumulador);
-      }, i * velocidad);
-    }
-  }, [texto, velocidad]);
-
-  return <>{textoVisible}</>;
+  // El texto completo e invisible reserva el espacio para que la página no salte.
+  return (
+    <Box component="span" sx={{ display: 'grid' }}>
+      <Box component="span" sx={{ gridArea: '1 / 1', visibility: 'hidden' }} aria-hidden>
+        {texto}
+      </Box>
+      <Box component="span" sx={{ gridArea: '1 / 1' }} aria-hidden>
+        {texto.slice(0, visibles)}
+      </Box>
+      <span className="solo-lectores">{texto}</span>
+    </Box>
+  );
 }
 
 export default function Hero() {
-  const [carreraActiva, setCarreraActiva] = useState(0);
-  const [viendoVideo, setViendoVideo] = useState(false);
-  const videoRef = useRef(null);
+  const [indiceCarrera, setIndiceCarrera] = useState(0);
+  const [modoCine, setModoCine] = useState(false);
+  const [videoDeFondo] = useState(permiteVideoDeFondo);
+  const video = useRef(null);
+  const carrera = CARRERAS_HERO[indiceCarrera];
 
-  const infoCarreras = [
-    {
-      titulo: "Análisis de Sistemas",
-      descripcion: "El Instituto de Formación Técnica Superior Nº 19 del GCABA dicta la Tecnicatura Superior en Análisis de Sistemas con planes de estudio modernos, prácticas profesionalizantes y títulos oficiales orientados al desarrollo de software y tecnología."
-    },
-    {
-      titulo: "Higiene y Seguridad en el Trabajo",
-      descripcion: "Nuestra Tecnicatura Superior en Higiene y Seguridad prepara profesionales capacitados para la prevención de riesgos laborales, diseño de planes de evacuación y gestión ambiental en todo tipo de organizaciones e industrias."
+  useEffect(() => {
+    const elemento = video.current;
+    if (!elemento) return;
+    if (modoCine) {
+      elemento.muted = false;
+      elemento.volume = 0.7;
+      elemento.play().catch(() => {});
+    } else {
+      elemento.muted = true;
+      if (!videoDeFondo) elemento.pause();
     }
-  ];
+  }, [modoCine, videoDeFondo]);
 
-  const carreraActual = infoCarreras[carreraActiva];
-
-  const handleVerVideo = () => {
-    setViendoVideo(true);
-    if (videoRef.current) {
-      videoRef.current.muted = false;
-      videoRef.current.volume = 0.7;
-    }
-  };
-
-  const handleCerrarVideo = () => {
-    setViendoVideo(false);
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-    }
-  };
+  useEffect(() => {
+    if (!modoCine) return undefined;
+    const alPresionar = (evento) => {
+      if (evento.key === 'Escape') setModoCine(false);
+    };
+    window.addEventListener('keydown', alPresionar);
+    return () => window.removeEventListener('keydown', alPresionar);
+  }, [modoCine]);
 
   return (
     <Box
-      id="inicio"
+      component="section"
+      aria-label="Presentación del instituto"
       sx={{
         position: 'relative',
-        pt: { xs: 6, md: 10 },
-        pb: { xs: 8, md: 12 },
-        borderBottom: '1px solid #e2e8f0',
         overflow: 'hidden',
-        minHeight: { md: '80vh' },
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: '#0f172a',
+        minHeight: { md: 'min(82vh, 760px)' },
+        py: { xs: 5, md: 8 },
+        bgcolor: 'background.paper',
       }}
     >
-      {/* --- VIDEO MP4 DE FONDO NATIVO --- */}
-      <Box
-        component="video"
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        src="https://ifts19.edu.ar/sitio/src/Presenta25.mp4"
-        sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          zIndex: 0,
-          pointerEvents: viendoVideo ? 'auto' : 'none',
-          opacity: viendoVideo ? 1 : 0.6,
-          transition: 'opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-        }}
-      />
+      {(videoDeFondo || modoCine) && (
+        <Box
+          component="video"
+          ref={video}
+          src={INSTITUTO.video}
+          autoPlay={videoDeFondo}
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          controls={modoCine}
+          aria-label="Video de presentación del instituto"
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: modoCine ? 'contain' : 'cover',
+            bgcolor: modoCine ? '#000000' : 'transparent',
+            zIndex: modoCine ? 3 : 0,
+          }}
+        />
+      )}
 
-      {/* --- Capa de Blur y Tinte --- */}
+      {/* Velo que adapta el video al modo claro u oscuro y garantiza el contraste del texto. */}
       <Box
-        sx={{
+        aria-hidden
+        sx={(t) => ({
           position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(248, 250, 252, 0.85)',
-          backdropFilter: 'blur(6px)',
+          inset: 0,
           zIndex: 1,
-          opacity: viendoVideo ? 0 : 1,
-          pointerEvents: 'none',
-          transition: 'opacity 0.6s ease-in-out, backdrop-filter 0.6s ease-in-out',
-        }}
+          backdropFilter: 'blur(6px)',
+          background:
+            'linear-gradient(100deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.92) 55%, rgba(255,255,255,0.84) 100%)',
+          ...t.applyStyles('dark', {
+            background:
+              'linear-gradient(100deg, rgba(13,20,32,0.95) 0%, rgba(13,20,32,0.9) 55%, rgba(13,20,32,0.8) 100%)',
+          }),
+        })}
       />
 
-      {/* --- BOTÓN FLOTANTE MODO CINE --- */}
-      {viendoVideo && (
+      {modoCine && (
         <Button
           variant="contained"
           startIcon={<CloseIcon />}
-          onClick={handleCerrarVideo}
+          onClick={() => setModoCine(false)}
           sx={{
             position: 'absolute',
-            top: 24,
-            right: 24,
-            zIndex: 10,
-            backgroundColor: 'rgba(15, 23, 42, 0.8)',
-            backdropFilter: 'blur(4px)',
+            top: 16,
+            right: 16,
+            zIndex: 4,
+            bgcolor: 'rgba(15, 23, 42, 0.85)',
             color: '#ffffff',
-            '&:hover': { backgroundColor: '#1e293b' },
-            textTransform: 'none',
-            fontWeight: '700',
-            borderRadius: '20px',
-            boxShadow: '0 10px 15px -3px rgba(0,0,0,0.3)'
+            '&:hover': { bgcolor: '#1e293b' },
           }}
         >
-          Cerrar Video
+          Cerrar video
         </Button>
       )}
 
-      {/* --- CONTENIDO PRINCIPAL --- */}
-      <Container
-        maxWidth="lg"
-        sx={{
-          position: 'relative',
-          zIndex: 2,
-          opacity: viendoVideo ? 0 : 1,
-          transform: viendoVideo ? 'scale(0.93) translateY(20px)' : 'scale(1) translateY(0px)',
-          pointerEvents: viendoVideo ? 'none' : 'auto',
-          transition: 'opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-        }}
-      >
+      <Container maxWidth="lg" inert={modoCine} sx={{ position: 'relative', zIndex: 2 }}>
+        <Box sx={{ display: 'grid', gap: { xs: 4, md: 6 }, alignItems: 'center', gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'minmax(0, 1.5fr) minmax(0, 1fr)' } }}>
+          <Box>
+            <Antetitulo>Educación superior pública y gratuita</Antetitulo>
 
-        {/* Selector de Carreras */}
-        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 6 }}>
-          <Tabs
-            value={carreraActiva}
-            onChange={(e, nuevoValor) => setCarreraActiva(nuevoValor)}
-            textColor="primary"
-            indicatorColor="primary"
-            sx={{
-              backgroundColor: 'rgba(255, 255, 255, 0.2)',
-              borderRadius: '30px',
-              p: 0.5,
-              boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)',
-              '& .MuiTabs-indicator': {
-                backgroundColor: '#148c14',
-                height: '100%',
-                borderRadius: '25px',
-                zIndex: -1
-              },
-              '& .MuiTab-root': {
-                textTransform: 'none',
-                fontWeight: '700',
-                borderRadius: '25px',
-                px: { xs: 3, md: 5 },
-                transition: 'color 0.3s ease',
-                minHeight: '40px',
-                fontSize: { xs: '0.85rem', md: '1rem' },
-                '&.Mui-selected': {
-                  color: '#ffffff',
-                }
-              }
-            }}
-          >
-            <Tab label="Análisis de Sistemas" />
-            <Tab label="Higiene y Seguridad" />
-          </Tabs>
-        </Box>
-
-        {/* Bloque central de textos */}
-        <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 8 }, maxWidth: '850px', mx: 'auto' }}>
-          <Typography variant="overline" sx={{ color: '#3264be', fontWeight: '800', letterSpacing: 2, display: 'block', mb: 1 }}>
-            Educación Superior Pública y Gratuita
-          </Typography>
-
-          {/* Título Tipeado (Se usa 'key' para forzar el reinicio de la animación al cambiar de pestaña) */}
-          <Typography variant="h3" component="h1" sx={{ color: '#148c14', fontWeight: '900', mb: 3, fontSize: { xs: '36px', md: '52px' }, lineHeight: 1.15, minHeight: { xs: '84px', md: '120px' } }}>
-            <TextoTipeado key={`titulo-${carreraActiva}`} texto={carreraActual.titulo} velocidad={40} />
-          </Typography>
-
-          {/* Descripción Tipeada */}
-          <Typography variant="h6" sx={{ color: '#334155', fontWeight: '500', mb: 4, lineHeight: 1.8, fontSize: { xs: '16px', md: '20px' }, minHeight: { xs: '140px', md: '110px' } }}>
-            <TextoTipeado key={`desc-${carreraActiva}`} texto={carreraActual.descripcion} velocidad={12} />
-          </Typography>
-
-          {/* Botones de acción (Fijos, no se tipean para mantener usabilidad) */}
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
-            <Button
-              variant="contained"
-              size="large"
-              href="#inscripciones"
-              sx={{ backgroundColor: '#148c14', '&:hover': { backgroundColor: '#1e293b' }, px: 4, py: 1.8, textTransform: 'none', fontWeight: '700', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(15, 23, 42, 0.2)' }}
+            <Tabs
+              value={indiceCarrera}
+              onChange={(_, valor) => setIndiceCarrera(valor)}
+              aria-label="Elegí una carrera"
+              variant="scrollable"
+              scrollButtons={false}
+              sx={{ mb: 2.5, minHeight: 40, borderBottom: '1px solid', borderColor: 'divider', '& .MuiTab-root': { minHeight: 40, textTransform: 'none', fontWeight: 700, px: 1.5 } }}
             >
-              Comenzar Preingreso 2026
-            </Button>
+              {CARRERAS_HERO.map((c) => (
+                <Tab key={c.pestana} label={c.pestana} />
+              ))}
+            </Tabs>
 
-            <Button
-              variant="contained"
-              size="large"
-              startIcon={<PlayArrowIcon />}
-              onClick={handleVerVideo}
-              sx={{ backgroundColor: '#3264be', '&:hover': { backgroundColor: '#1e293b' }, px: 4, py: 1.8, textTransform: 'none', fontWeight: '700', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(15, 23, 42, 0.2)' }}
-            >
-              Ver Video Presentación
-            </Button>
+            <Typography variant="h1" sx={{ minHeight: { sm: '2.2em' } }}>
+              <TextoTipeado key={carrera.titulo} texto={carrera.titulo} velocidad={38} />
+            </Typography>
 
-            <Button
-              variant="outlined"
-              size="large"
-              startIcon={<CalendarMonthIcon />}
-              href="https://aulasvirtuales.bue.edu.ar/"
-              target="_blank"
-              rel="noopener"
-              sx={{ color: '#148c14', borderColor: '#148c14', backgroundColor: 'rgba(255,255,255,0.7)', '&:hover': { borderColor: '#148c14', backgroundColor: '#ffffff' }, px: 3, textTransform: 'none', fontWeight: '700', borderRadius: '8px' }}
-            >
-              Agenda Académica 2026
-            </Button>
+            <Typography component="div" sx={{ mt: 2, mb: 3.5, maxWidth: 620, color: 'text.secondary', fontSize: { xs: '1.05rem', md: '1.15rem' }, lineHeight: 1.6 }}>
+              <TextoTipeado key={carrera.descripcion} texto={carrera.descripcion} velocidad={10} />
+            </Typography>
+
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5 }}>
+              <Button variant="contained" size="large" component={LinkRouter} to={carrera.ruta} endIcon={<ArrowForwardIcon />}>
+                Conocé la carrera
+              </Button>
+              <Button variant="outlined" size="large" component={LinkRouter} to={RUTAS.preingreso}>
+                Cómo ingresar
+              </Button>
+              <Button variant="text" size="large" color="secondary" startIcon={<PlayArrowIcon />} onClick={() => setModoCine(true)}>
+                Ver video de presentación
+              </Button>
+            </Box>
           </Box>
+
+          <Paper variant="outlined" component="nav" aria-label="Accesos rápidos" sx={{ p: 1, backgroundImage: 'none' }}>
+            <Typography variant="overline" component="p" sx={{ px: 1.5, pt: 1, pb: 0.5, color: 'text.secondary' }}>
+              Accesos rápidos
+            </Typography>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr 1fr', md: '1fr' } }}>
+              {ACCESOS.map(({ etiqueta, icono: Icono, ...destino }) => (
+                <ButtonBase
+                  key={etiqueta}
+                  {...propsEnlace(destino)}
+                  sx={{
+                    justifyContent: 'flex-start',
+                    textAlign: 'left',
+                    gap: 1.25,
+                    px: 1.5,
+                    py: 1.1,
+                    borderRadius: 1,
+                    fontWeight: 600,
+                    fontSize: '0.95rem',
+                    '&:hover': { bgcolor: 'action.hover' },
+                  }}
+                >
+                  <Icono fontSize="small" sx={{ color: 'secondary.main' }} aria-hidden />
+                  {etiqueta}
+                </ButtonBase>
+              ))}
+            </Box>
+          </Paper>
         </Box>
-
-        {/* --- Bloque de Funciones Inferiores (Tarjetas fijas) --- */}
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h6" align="center" sx={{ color: '#475569', fontWeight: '800', textTransform: 'uppercase', letterSpacing: 1.5, mb: 4, fontSize: '13px' }}>
-            Propósito Institucional
-          </Typography>
-
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={4}>
-              <Paper variant="transparent" sx={{ p: 3, backgroundColor: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(8px)', border: '1px solid rgba(226, 232, 240, 0)', borderRadius: '12px' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
-                  <GroupsIcon sx={{ color: '#3264be', fontSize: 26 }} />
-                  <Typography variant="subtitle1" sx={{ fontWeight: '800', color: '#148c14' }}>
-                    Responsabilidad Social
-                  </Typography>
-                </Box>
-                <Typography variant="body2" sx={{ color: '#334155', lineHeight: 1.7, fontWeight: '500' }}>
-                  Formar técnicos superiores capacitados para actuar profesionalmente y contribuir a la construcción de una sociedad más justa y solidaria.
-                </Typography>
-              </Paper>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-              <Paper variant="transparent" sx={{ p: 3, backgroundColor: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(8px)', border: '1px solid rgba(226, 232, 240, 0)', borderRadius: '12px' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
-                  <AccountBalanceIcon sx={{ color: '#3264be', fontSize: 26 }} />
-                  <Typography variant="subtitle1" sx={{ fontWeight: '800', color: '#148c14' }}>
-                    Articulación Universitaria
-                  </Typography>
-                </Box>
-                <Typography variant="body2" sx={{ color: '#334155', lineHeight: 1.7, fontWeight: '500' }}>
-                  Impulsar acciones de cooperación e intercambio con otras instituciones de educación superior mediante convenios universitarios.
-                </Typography>
-              </Paper>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-              <Paper variant="transparent" sx={{ p: 3, backgroundColor: 'rgba(255, 255, 255,0)', backdropFilter: 'blur(8px)', border: '1px solid rgba(226, 232, 240, 0)', borderRadius: '12px' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
-                  <ScienceIcon sx={{ color: '#3264be', fontSize: 26 }} />
-                  <Typography variant="subtitle1" sx={{ fontWeight: '800', color: '#148c14' }}>
-                    Acciones de Extensión
-                  </Typography>
-                </Box>
-                <Typography variant="body2" sx={{ color: '#334155', lineHeight: 1.7, fontWeight: '500' }}>
-                  Difundir saberes a través del desarrollo de acciones orientadas a la aplicación de innovaciones en espacios educativos, sociales y productivos.
-                </Typography>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Box>
-
       </Container>
     </Box>
   );
