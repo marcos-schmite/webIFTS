@@ -11,7 +11,7 @@ npm run build    # genera dist/
 npm run lint
 ```
 
-El sitio se publica en Netlify. La configuración está en `netlify.toml`, que incluye la redirección a `index.html` necesaria para que las direcciones internas (como `/preingreso`) funcionen al recargar. En otro hosting habría que configurar una regla equivalente.
+El sitio se publica en Netlify. La configuración de build está en `netlify.toml`. `public/_redirects` envía todas las rutas a `index.html`, para que las direcciones internas (como `/preingreso`) funcionen al recargar. En otro hosting habría que configurar una regla equivalente.
 
 ## Dónde actualizar el contenido
 

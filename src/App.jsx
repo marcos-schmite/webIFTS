@@ -16,7 +16,7 @@ const Egresados = lazy(() => import('./pages/Egresados.jsx'));
 const Preingreso = lazy(() => import('./pages/Preingreso.jsx'));
 const Regulares = lazy(() => import('./pages/Regulares.jsx'));
 
-// Las direcciones limpias necesitan la redirección a index.html de netlify.toml.
+// Las direcciones limpias necesitan la redirección a index.html de public/_redirects.
 const router = createBrowserRouter([
   {
     path: RUTAS.inicio,
