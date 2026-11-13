@@ -4,7 +4,7 @@ import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Link as LinkRouter } from 'react-router-dom';
 import Beneficios from '../components/Beneficios.jsx';
-import CarruselActividades from '../components/CarruselActividades.jsx';
+import Galeria from '../components/Galeria.jsx';
 import Hero from '../components/Hero.jsx';
 import Seccion, { EncabezadoSeccion } from '../components/Seccion.jsx';
 import { LISTA_CARRERAS } from '../data/carreras.js';
@@ -81,7 +81,7 @@ function Carreras() {
 
 function ComoIngresar() {
   return (
-    <Seccion>
+    <Seccion alterna>
       <EncabezadoSeccion antetitulo="Preingreso" titulo="¿Cómo ingresar?" descripcion="El requisito es tener el nivel medio aprobado. Estos son los pasos." />
       <Box component="ol" sx={{ display: 'grid', gap: 3, gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: 'repeat(4, 1fr)' }, listStyle: 'none', m: 0, p: 0 }}>
         {PASOS_INGRESO.map((paso, i) => (
@@ -110,11 +110,11 @@ export default function Inicio() {
 
   return (
     <>
-      <Hero />
-      <AvisoHorarios />
-      <Carreras />
       <Beneficios />
-      <CarruselActividades />
+      <Hero />
+      <Galeria />
+      <Carreras />
+      <AvisoHorarios />
       <ComoIngresar />
     </>
   );

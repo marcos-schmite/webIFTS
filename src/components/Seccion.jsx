@@ -33,11 +33,14 @@ export function Antetitulo({ children, sx }) {
   );
 }
 
-export function EncabezadoSeccion({ antetitulo, titulo, descripcion, sx }) {
+// nivel={1} convierte el título en el encabezado principal de la página.
+export function EncabezadoSeccion({ antetitulo, titulo, descripcion, nivel = 2, sx }) {
   return (
     <Box sx={{ mb: { xs: 3.5, md: 5 }, maxWidth: 720, ...sx }}>
       {antetitulo && <Antetitulo>{antetitulo}</Antetitulo>}
-      <Typography variant="h2">{titulo}</Typography>
+      <Typography variant={nivel === 1 ? 'h1' : 'h2'} component={`h${nivel}`}>
+        {titulo}
+      </Typography>
       {descripcion && (
         <Typography sx={{ mt: 1.5, color: 'text.secondary', fontSize: '1.05rem', lineHeight: 1.6 }}>
           {descripcion}

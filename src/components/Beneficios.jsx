@@ -64,7 +64,7 @@ function Item({ icono: Icono, titulo, texto, color }) {
 export default function Beneficios() {
   return (
     <Seccion>
-      <EncabezadoSeccion antetitulo="Beneficios" titulo="¿Por qué estudiar en el IFTS 19?" />
+      <EncabezadoSeccion antetitulo="Beneficios" titulo="¿Por qué estudiar en el IFTS 19?" nivel={1} />
       <Box sx={{ display: 'grid', gap: 2.5, gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: 'repeat(4, 1fr)' } }}>
         {BENEFICIOS.map((b) => (
           <Item key={b.titulo} {...b} color="primary" />

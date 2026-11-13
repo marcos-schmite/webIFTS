@@ -11,6 +11,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import { Link as LinkRouter } from 'react-router-dom';
 import { ENLACES, INSTITUTO, RUTAS } from '../data/sitio.js';
+import useEnVista from '../hooks/useEnVista.js';
 import { propsEnlace } from '../utils/enlaces.js';
 import { Antetitulo } from './Seccion.jsx';
 
@@ -47,14 +48,15 @@ const ACCESOS = [
   { etiqueta: 'Aula Virtual', icono: ComputerOutlinedIcon, href: ENLACES.aulaVirtual },
 ];
 
-function TextoTipeado({ texto, velocidad }) {
+function TextoTipeado({ texto, velocidad, activo }) {
   const [visibles, setVisibles] = useState(() => (prefiereMenosMovimiento() ? texto.length : 0));
 
+  // Empieza a escribir recién cuando la sección aparece en pantalla.
   useEffect(() => {
-    if (visibles >= texto.length) return undefined;
+    if (!activo || visibles >= texto.length) return undefined;
     const temporizador = setTimeout(() => setVisibles((n) => n + 1), velocidad);
     return () => clearTimeout(temporizador);
-  }, [visibles, texto, velocidad]);
+  }, [activo, visibles, texto, velocidad]);
 
   // El texto completo e invisible reserva el espacio para que la página no salte.
   return (
@@ -75,8 +77,12 @@ export default function Hero() {
   const [modoCine, setModoCine] = useState(false);
   const [videoDeFondo] = useState(permiteVideoDeFondo);
   const video = useRef(null);
+  const seccion = useRef(null);
+  const { enVista, visto } = useEnVista(seccion, '200px');
   const carrera = CARRERAS_HERO[indiceCarrera];
 
+  // El video de fondo se carga cuando la sección se acerca a la pantalla
+  // y se pausa cuando sale de vista.
   useEffect(() => {
     const elemento = video.current;
     if (!elemento) return;
@@ -86,9 +92,10 @@ export default function Hero() {
       elemento.play().catch(() => {});
     } else {
       elemento.muted = true;
-      if (!videoDeFondo) elemento.pause();
+      if (videoDeFondo && enVista) elemento.play().catch(() => {});
+      else elemento.pause();
     }
-  }, [modoCine, videoDeFondo]);
+  }, [modoCine, videoDeFondo, enVista]);
 
   useEffect(() => {
     if (!modoCine) return undefined;
@@ -102,6 +109,7 @@ export default function Hero() {
   return (
     <Box
       component="section"
+      ref={seccion}
       aria-label="Presentación del instituto"
       sx={{
         position: 'relative',
@@ -113,12 +121,11 @@ export default function Hero() {
         bgcolor: 'background.paper',
       }}
     >
-      {(videoDeFondo || modoCine) && (
+      {((videoDeFondo && visto) || modoCine) && (
         <Box
           component="video"
           ref={video}
           src={INSTITUTO.video}
-          autoPlay={videoDeFondo}
           loop
           muted
           playsInline
@@ -191,12 +198,12 @@ export default function Hero() {
               ))}
             </Tabs>
 
-            <Typography variant="h1" sx={{ minHeight: { sm: '2.2em' } }}>
-              <TextoTipeado key={carrera.titulo} texto={carrera.titulo} velocidad={38} />
+            <Typography variant="h1" component="h2" sx={{ minHeight: { sm: '2.2em' } }}>
+              <TextoTipeado key={carrera.titulo} texto={carrera.titulo} velocidad={38} activo={visto} />
             </Typography>
 
             <Typography component="div" sx={{ mt: 2, mb: 3.5, maxWidth: 620, color: 'text.secondary', fontSize: { xs: '1.05rem', md: '1.15rem' }, lineHeight: 1.6 }}>
-              <TextoTipeado key={carrera.descripcion} texto={carrera.descripcion} velocidad={10} />
+              <TextoTipeado key={carrera.descripcion} texto={carrera.descripcion} velocidad={10} activo={visto} />
             </Typography>
 
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5 }}>

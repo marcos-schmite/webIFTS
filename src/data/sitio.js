@@ -79,11 +79,6 @@ export const CONSTANCIAS = [
   },
 ];
 
-export const PLANILLA = {
-  id: '12ITJUMpBEGZ5Dj8u4abeG9Hf_EgmRDVhD7RZ75LZeVA',
-  gidActividades: '1126888506',
-};
-
 export const RUTAS = {
   inicio: '/',
   oferta: '/oferta-academica',

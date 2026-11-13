@@ -27,7 +27,7 @@ Todo el contenido está en `src/data/`:
 
 Las mesas de exámenes y los horarios en PDF se leen del servidor actual (`BASE_ARCHIVOS` en `sitio.js`). Si se reemplaza un PDF manteniendo el nombre, el sitio lo muestra sin cambios; si cambia el nombre, hay que actualizar `ARCHIVOS`. Si el servidor se da de baja, hay que mover los archivos y cambiar `BASE_ARCHIVOS`.
 
-Las fotos de **Actividades** se leen de la pestaña correspondiente de la planilla de Google (columna A: enlace, columna B: descripción). Si no hay filas o la planilla no responde, se muestran fotos de respaldo.
+Las fotos de la **Galería** del inicio están en `public/galeria/` y sus descripciones en `src/data/galeria.js`. Son fotos de stock con licencia CC0 o de dominio público.
 
 ## Modo claro y oscuro
 
