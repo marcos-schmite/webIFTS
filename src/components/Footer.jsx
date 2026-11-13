@@ -24,6 +24,7 @@ const COLUMNAS = [
       { etiqueta: 'Mesas de exámenes', to: RUTAS.calendario },
       { etiqueta: 'Constancias', to: RUTAS.constancias },
       { etiqueta: 'Egresados', to: RUTAS.egresados },
+      { etiqueta: 'Actividades', to: RUTAS.actividades },
       { etiqueta: 'SIU Guaraní', href: ENLACES.siuGuarani },
       { etiqueta: 'Aula Virtual', href: ENLACES.aulaVirtual },
     ],

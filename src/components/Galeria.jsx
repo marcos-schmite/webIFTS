@@ -1,9 +1,12 @@
 import { useEffect, useReducer, useState } from 'react';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, Button, IconButton, Typography } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Link as LinkRouter } from 'react-router-dom';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { CARRERAS } from '../data/carreras.js';
 import { GALERIA } from '../data/galeria.js';
+import { RUTAS } from '../data/sitio.js';
 import Seccion, { EncabezadoSeccion } from './Seccion.jsx';
 
 const estiloFlecha = {
@@ -105,6 +108,12 @@ export default function Galeria() {
             </Box>
           ))}
         </Box>
+      </Box>
+
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+        <Button variant="outlined" size="large" component={LinkRouter} to={RUTAS.actividades} endIcon={<ArrowForwardIcon />}>
+          Ver fotos de las actividades de los estudiantes
+        </Button>
       </Box>
     </Seccion>
   );

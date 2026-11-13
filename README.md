@@ -29,6 +29,18 @@ Las mesas de exámenes y los horarios en PDF se leen del servidor actual (`BASE_
 
 Las fotos de la **Galería** del inicio están en `public/galeria/` y sus descripciones en `src/data/galeria.js`. Son fotos de stock con licencia CC0 o de dominio público.
 
+## Cómo sumar fotos de actividades
+
+La página **Actividades** (`/actividades`) muestra las salidas, talleres y proyectos de los estudiantes.
+
+1. Copiá las fotos en `public/actividades/<nombre-de-la-actividad>/`. Conviene que sean JPG de unos 1280 px de ancho, para que carguen rápido.
+2. En `src/data/actividades.js`, agregá un bloque al principio de la lista con el título, la fecha, la carrera, una descripción breve y la lista de fotos.
+3. Subí los cambios a `main`: Netlify publica solo.
+
+Las fotos y descripciones actuales son de ejemplo y hay que reemplazarlas.
+
+Para mostrar el logo de AMET en el inicio, copiá el archivo en `public/` y poné su ruta en `AMET.logo`, en `src/data/sitio.js`.
+
 ## Modo claro y oscuro
 
 Por defecto sigue la preferencia del sistema; el botón del encabezado la cambia y queda guardada. Los colores están en `src/theme.js`.

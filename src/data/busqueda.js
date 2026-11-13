@@ -1,3 +1,4 @@
+import { ACTIVIDADES } from './actividades.js';
 import { LISTA_CARRERAS } from './carreras.js';
 import { AUTORIDADES, CUERPO_DOCENTE } from './docentes.js';
 import { ARCHIVOS, CONSTANCIAS, ENLACES, RUTAS } from './sitio.js';
@@ -17,6 +18,7 @@ const PAGINAS = [
   { titulo: 'Calendario académico', detalle: 'Mesas de exámenes, finales', to: RUTAS.calendario },
   { titulo: 'Constancias y solicitudes', detalle: 'Certificados para descargar', to: RUTAS.constancias },
   { titulo: 'Docentes y autoridades', detalle: 'Cuerpo docente, rectoría, bedelía', to: RUTAS.docentes },
+  { titulo: 'Actividades', detalle: 'Fotos de salidas, talleres y proyectos de los estudiantes', to: RUTAS.actividades },
   { titulo: 'Contacto', detalle: 'Dirección, correo, teléfono e Instagram', to: RUTAS.contacto },
 ];
 
@@ -69,6 +71,8 @@ const PERSONAS = [
   })),
 ];
 
+const SALIDAS_Y_TALLERES = ACTIVIDADES.map((a) => ({ titulo: a.titulo, detalle: a.descripcion, to: RUTAS.actividades }));
+
 const conTipo = (tipo, lista) => lista.map((item) => ({ ...item, tipo }));
 
 export const INDICE_BUSQUEDA = [
@@ -78,6 +82,7 @@ export const INDICE_BUSQUEDA = [
   ...conTipo('Documento', DOCUMENTOS),
   ...conTipo('Materia', MATERIAS),
   ...conTipo('Persona', PERSONAS),
+  ...conTipo('Actividad', SALIDAS_Y_TALLERES),
 ].map((item) => ({
   ...item,
   clave: item.to ?? item.href,

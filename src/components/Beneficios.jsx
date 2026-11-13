@@ -6,7 +6,8 @@ import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
 import ScienceOutlinedIcon from '@mui/icons-material/ScienceOutlined';
 import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
-import Seccion, { EncabezadoSeccion } from './Seccion.jsx';
+import { AMET, INSTITUTO } from '../data/sitio.js';
+import Seccion, { Antetitulo, EncabezadoSeccion } from './Seccion.jsx';
 
 const BENEFICIOS = [
   {
@@ -61,6 +62,66 @@ function Item({ icono: Icono, titulo, texto, color }) {
   );
 }
 
+// Muestra el logo oficial si está cargado en AMET.logo; si no, la sigla.
+function LogoAmet() {
+  const caja = { width: { xs: 96, sm: 120 }, height: { xs: 96, sm: 120 }, borderRadius: 2, display: 'grid', placeItems: 'center', flexShrink: 0 };
+
+  if (AMET.logo) {
+    return (
+      <Box sx={{ ...caja, p: 1.5, bgcolor: '#ffffff', border: '1px solid', borderColor: 'divider' }}>
+        <Box component="img" src={AMET.logo} alt={`Logo de ${AMET.sigla}`} sx={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+      </Box>
+    );
+  }
+
+  return (
+    <Box aria-hidden sx={{ ...caja, color: '#ffffff', background: 'linear-gradient(135deg, #3264be 0%, #0f7f0f 100%)', boxShadow: '0 10px 24px -12px rgba(15, 23, 42, 0.55)' }}>
+      <Typography component="span" sx={{ fontWeight: 900, fontSize: { xs: '1.55rem', sm: '1.9rem' }, letterSpacing: '0.05em', lineHeight: 1 }}>
+        {AMET.sigla}
+      </Typography>
+    </Box>
+  );
+}
+
+function ConvenioAmet() {
+  return (
+    <Paper
+      variant="outlined"
+      sx={{
+        mt: 2.5,
+        p: { xs: 3, md: 4 },
+        position: 'relative',
+        overflow: 'hidden',
+        backgroundImage: 'none',
+        display: 'grid',
+        gap: { xs: 2.5, sm: 4 },
+        alignItems: 'center',
+        gridTemplateColumns: { xs: '1fr', sm: 'auto 1fr' },
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 4,
+          background: 'linear-gradient(90deg, #3264be 0%, #0f7f0f 100%)',
+        },
+      }}
+    >
+      <LogoAmet />
+      <Box>
+        <Antetitulo sx={{ mb: 0.75 }}>Convenio institucional</Antetitulo>
+        <Typography variant="h3" sx={{ fontSize: { xs: '1.25rem', md: '1.5rem' } }}>
+          Instituto conveniado con {AMET.sigla}
+        </Typography>
+        <Typography sx={{ mt: 1, color: 'text.secondary', lineHeight: 1.65, maxWidth: 680 }}>
+          El {INSTITUTO.nombre} trabaja en convenio con la {AMET.nombre} ({AMET.sigla}), que impulsó la creación del instituto en 2010.
+        </Typography>
+      </Box>
+    </Paper>
+  );
+}
+
 export default function Beneficios() {
   return (
     <Seccion>
@@ -77,6 +138,7 @@ export default function Beneficios() {
           <Item key={f.titulo} {...f} color="secondary" />
         ))}
       </Box>
+      <ConvenioAmet />
     </Seccion>
   );
 }

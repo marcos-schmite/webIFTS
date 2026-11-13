@@ -37,10 +37,13 @@ const estaActivo = (item, pathname) => {
   return !tieneBotonPropio && item.items.some((sub) => sub.to === pathname);
 };
 
+// Espaciado compacto: el contenedor mide como máximo 1200 px y tienen que entrar todos los botones.
 const estiloBotonNav = (activo) => ({
-  px: 1.25,
-  fontSize: '0.92rem',
+  px: 0.75,
+  minWidth: 0,
+  fontSize: '0.875rem',
   whiteSpace: 'nowrap',
+  '& .MuiButton-endIcon': { ml: 0.25 },
   borderRadius: 1,
   boxShadow: activo ? 'inset 0 -2px 0 0 #ffffff' : 'none',
   '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.14)' },

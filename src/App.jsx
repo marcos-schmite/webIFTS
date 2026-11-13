@@ -11,6 +11,7 @@ const Caracteristicas = lazy(() => import('./pages/Caracteristicas.jsx'));
 const Carrera = lazy(() => import('./pages/Carrera.jsx'));
 const Constancias = lazy(() => import('./pages/Constancias.jsx'));
 const Contacto = lazy(() => import('./pages/Contacto.jsx'));
+const Actividades = lazy(() => import('./pages/Actividades.jsx'));
 const Docentes = lazy(() => import('./pages/Docentes.jsx'));
 const Egresados = lazy(() => import('./pages/Egresados.jsx'));
 const Preingreso = lazy(() => import('./pages/Preingreso.jsx'));
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
       { path: RUTAS.calendario, element: <Calendario /> },
       { path: RUTAS.constancias, element: <Constancias /> },
       { path: RUTAS.docentes, element: <Docentes /> },
+      { path: RUTAS.actividades, element: <Actividades /> },
       { path: RUTAS.contacto, element: <Contacto /> },
       { path: '*', element: <NoEncontrada /> },
     ],

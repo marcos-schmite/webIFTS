@@ -38,6 +38,14 @@ export const ENLACES = {
     'https://docs.google.com/forms/d/e/1FAIpQLScKxCJb1BwS1dZVfdMt0tINNJv6EUtYeBkykGnjNuGL58sVpg/viewform',
 };
 
+// Convenio con AMET. Para mostrar el logo oficial, copialo en public/ y poné su ruta en logo
+// (por ejemplo '/amet-logo.png'). Mientras sea null se muestra la sigla.
+export const AMET = {
+  sigla: 'AMET',
+  nombre: 'Asociación del Magisterio de Enseñanza Técnica',
+  logo: null,
+};
+
 export const VIDEOS = {
   preinscripcion: { id: 'yElsurlbF74', titulo: 'Cómo preinscribirte a una tecnicatura superior' },
   aulaVirtual: { id: 'LJnHP_I4Vbk', titulo: 'Ingreso a las aulas virtuales (Moodle de la Ciudad)' },
@@ -90,6 +98,7 @@ export const RUTAS = {
   calendario: '/alumnos/calendario',
   constancias: '/alumnos/constancias',
   docentes: '/docentes',
+  actividades: '/actividades',
   contacto: '/contacto',
 };
 
@@ -123,6 +132,7 @@ export const NAVEGACION = [
     ],
   },
   { etiqueta: 'Docentes', to: RUTAS.docentes },
+  { etiqueta: 'Actividades', to: RUTAS.actividades },
   { etiqueta: 'Solicitudes', to: RUTAS.constancias },
   { etiqueta: 'Contacto', to: RUTAS.contacto },
 ];
